@@ -61,10 +61,16 @@ def gen():
 
 @app.route("/result<name>", methods=["POST", "GET"])
 def result(name):
+    dbPlayer = players.query.filter_by(name=name).first()
     guess = request.form["guess"]
     if guess == name:
+        dbPlayer.numC = dbPlayer.numC + 1
+        dbPlayer.numG = dbPlayer.numG + 1
+        db.session.commit()
         return render_template("result.html", value="correct")
     else:
+        dbPlayer.numG = dbPlayer.numG + 1
+        db.session.commit()
         return render_template("result.html", value="Incorrect")
 
 @app.route("/clear", methods=["POST", "GET"])
