@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Random Player{% endblock %}
+{% block style %}{{url_for("static", filename="gen.css")}}{% endblock%}
+{% block content%}
+    {% if value != "blank" %}
+        <p>Name: {{value.name}}, Team: {{value.team}}
+        <img id="image" src={{value.url}}>
+        <form action="gen" method="GET">
+            <button>Generate New Player</button>
+        </form>
+    {% else %}
+        <p>No players found</p>
+    {% endif %}
+{% endblock %}
