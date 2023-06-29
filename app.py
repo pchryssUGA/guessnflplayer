@@ -38,7 +38,7 @@ def new():
         name = request.form["nm"]
         team = request.form["tm"]
         url = request.form["lk"]
-        usr = players(name, team, url)
+        usr = players(name, team, 2021, url, 0, 0)
         db.session.add(usr)
         db.session.commit()
         return redirect(url_for("view"))
@@ -49,14 +49,23 @@ def new():
 def view():
     return render_template("view.html", values=players.query.all())
 
-@app.route("/gen")
+@app.route("/gen", methods=["POST", "GET"] )
 def gen():
     length = players.query.order_by(players._id.desc()).first()
     if length is not None:
         num = str(random.randint(1, length._id))
-        return render_template("gen.html", value=players.query.filter_by(_id=num).first())
+        currPlayer = players.query.filter_by(_id=num).first()
+        return render_template("gen.html", value=currPlayer)
     else:
         return render_template("gen.html", value="blank")
+
+@app.route("/result<name>", methods=["POST", "GET"])
+def result(name):
+    guess = request.form["guess"]
+    if guess == name:
+        return render_template("result.html", value="correct")
+    else:
+        return render_template("result.html", value="Incorrect")
 
 @app.route("/clear", methods=["POST", "GET"])
 def clear():
