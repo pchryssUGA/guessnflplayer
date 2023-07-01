@@ -1,8 +1,7 @@
 from flask import Flask, Blueprint, render_template, request, redirect, url_for
 from db import db
 from flask_sqlalchemy import SQLAlchemy
-from openpyxl import workbook, load_workbook
-from bs4 import BeautifulSoup
+#from bs4 import BeautifulSoup
 import pandas as pd
 import requests
 import json
@@ -45,7 +44,8 @@ def run(tm, sd, ed):
         table = df[0]
         player_names = table['Player']
         for player in player_names:
-            response = requests.get(API+"cx="+CX+"&num=1&q="+player+"&searchType=image&access_token="+KEY+"&key="+KEY)
+            query = "nfl " + player + " playing for " + tm + " clear image by himself"
+            response = requests.get(API+"cx="+CX+"&num=1&q="+query+"&searchType=image&access_token="+KEY+"&key="+KEY)
             image = response.json()
             imageItems = image['items'][0]
             imageLink = imageItems['link']

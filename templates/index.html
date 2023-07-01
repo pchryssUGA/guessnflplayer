@@ -2,5 +2,9 @@
 {% block title%}Home Page{% endblock%}
 
 {% block content%}
-    <h1>Hello</h1>
+    <h1>Pick your team!</h1>
+    <form action="gen" method="GET">
+        <button name="pick_team" value="nyj">Jets</button>
+        <button name="pick_team" value="cin">Bengals</button>
+    </form>
 {% endblock %}
