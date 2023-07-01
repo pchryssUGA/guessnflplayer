@@ -3,6 +3,7 @@ from scrape import scrape_blueprint
 from db import db
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql.expression import func, select
+from models import players
 import random
 
 app = Flask("__main__")
@@ -11,23 +12,6 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///posts.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db.init_app(app) # to add the app inside SQLAlchemy()
 
-class players(db.Model):
-    _id = db.Column("id", db.Integer, primary_key=True)
-    name = db.Column(db.String(100))
-    team = db.Column(db.String(100))
-    year = db.Column(db.Integer)
-    url = db.Column(db.String(200))
-    numG = db.Column(db.Integer)
-    numC = db.Column(db.Integer)
-    
-    
-    def __init__(self, name, team, year, url, numG, numC):
-        self.name = name
-        self.team = team
-        self.year = year
-        self.url = url
-        self.numG = numG
-        self.numC = numC
 
 @app.route("/home")
 @app.route("/")
