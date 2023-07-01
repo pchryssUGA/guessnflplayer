@@ -1,10 +1,12 @@
 from flask import Flask, redirect, url_for, render_template, request, session
+from scrape import scrape_blueprint
 from db import db
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql.expression import func, select
 import random
 
 app = Flask("__main__")
+app.register_blueprint(scrape_blueprint, url_prefix="/scrape")
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///posts.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db.init_app(app) # to add the app inside SQLAlchemy()
@@ -27,6 +29,7 @@ class players(db.Model):
         self.numG = numG
         self.numC = numC
 
+@app.route("/home")
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -81,6 +84,8 @@ def clear():
         return redirect(url_for("view"))
     else:
         return render_template("clear.html")
+    
+
 
 
 if __name__ == '__main__':
