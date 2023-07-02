@@ -9,8 +9,10 @@
             <p>Guess Player  <input type="text" name="guess" placeholder="Enter Guess"/></p>
             <p><input type="submit" value="submit" /></p>
         </form>
-        <form action="gen" method="GET">
-            <button>Generate New Player</button>
+        <form action="#" method="POST">
+            <h1>{{value.team}}</h1>
+            <input type="hidden" name="pick_team" value="{{value.team}}">
+            <input type="submit" name="submit" value="Generate New Player">
         </form>
     {% else %}
         <p>No players found</p>
