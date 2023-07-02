@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block title %}Generate Random Player{% endblock %}
-{% block style %}{{url_for("static", filename="gen.css")}}{% endblock%}
+{% block style %}{{url_for("static", filename="styles/gen.css")}}{% endblock%}
 {% block content%}
     {% if value != "blank" %}
         <p>Name: {{value.name}}, Team: {{value.team}}
