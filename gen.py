@@ -34,6 +34,6 @@ def result(name):
     if guess == name:
         dbPlayer.numC = dbPlayer.numC + 1
         db.session.commit()
-        return render_template("result.html", values=["correct", dbPlayer.team])
+        return render_template("result.html", values=["Correct :)", dbPlayer])
     else:
-        return render_template("result.html", values=["Incorrect", dbPlayer.team])
+        return render_template("result.html", values=["Incorrect :(", dbPlayer])

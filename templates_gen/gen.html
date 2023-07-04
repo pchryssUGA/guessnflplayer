@@ -3,17 +3,23 @@
 {% block style %}{{url_for("static", filename="styles/gen.css")}}{% endblock%}
 {% block content%}
     {% if value != "blank" %}
-        <p>Name: {{value.name}}, Team: {{value.team}}
-        <img id="image" src={{value.url}}>
-        <form action = "result{{value.name}}" method="post">
-            <p>Guess Player  <input type="text" name="guess" placeholder="Enter Guess"/></p>
-            <p><input type="submit" value="submit" /></p>
-        </form>
-        <form action="#" method="POST">
-            <h1>{{value.team}}</h1>
-            <input type="hidden" name="pick_team" value="{{value.team}}">
-            <input type="submit" name="submit" value="Generate New Player">
-        </form>
+        <div class="title">
+            <h1>Guess the player!</h1>
+        </div>
+        <div class="img_div">
+            <img id="image" src={{value.url}}>
+        </div>
+        <div class="guess_div">
+            <form action = "result{{value.name}}" method="post">
+                <p>Guess Player <input type="text" name="guess" placeholder="Enter Guess" autocomplete="off"/><input id="submit_button" type="submit" value="submit" /></p>
+            </form>
+        </div>
+        <div class="generate_div">
+            <form action="#" method="POST">
+                <input type="hidden" name="pick_team" value="{{value.team}}">
+                <p>Dont know? <input type="submit" name="submit" value="Generate A New Player"></p>
+            </form>
+        </div>
     {% else %}
         <p>No players found</p>
     {% endif %}
