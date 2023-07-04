@@ -1,28 +1,40 @@
-body {color:blue}
-
-.logo_image {
-    height: 50;
-    width: auto;
+body {
+    font-family: 'Oswald', sans-serif;
+    background-color: #EAEAEA;
 }
 
-.logo_button {
-    border: none;
-    background-color: white;
+.navbar {
+}
+
+.title {
+    text-align: center;
+    padding: 10px;
 }
 
 .logo_div {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 2fr));
-    grid-gap: 120px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 2fr));
+    grid-row-gap: 80px;
+    grid-column-gap: 50px;
+
 }
 
+    .afc_east, .afc_west, .afc_north, .afc_south, 
+    .nfc_east, .nfc_west, .nfc_north, .nfc_south {
+        text-align: center;
+    }
 
-.nfl_division {
-    display:flex;
-    align-items: center;
-    text-align: center;
-}
+        .division_teams {
+            display: flex;
+        }
 
-.division_teams {
-    display: flex;
-}
+            .logo_button {
+                border: none;
+            }
+
+            .logo_image {
+                height: 50px;
+                width: auto;
+            }
+
+
