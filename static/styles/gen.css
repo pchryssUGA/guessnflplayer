@@ -1,3 +1,4 @@
+
 .img_div {
     display: flex;
     justify-content: center;
@@ -23,4 +24,9 @@
 
 #submit_button {
     margin: 10px;
+}
+
+.report_div{
+    display: flex;
+    justify-content: center;
 }
