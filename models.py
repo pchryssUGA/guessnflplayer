@@ -1,5 +1,6 @@
 from db import db
 
+
 class players(db.Model):
     _id = db.Column("id", db.Integer, primary_key=True)
     name = db.Column(db.String(100))
@@ -17,7 +18,4 @@ class players(db.Model):
         self.url = url
         self.numG = numG
         self.numC = numC
-        
-class reports(db.Model):
-    _id = db.Column("id", db.Integer, primary_key=True)
     
