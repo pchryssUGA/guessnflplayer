@@ -51,7 +51,7 @@ def clear():
     
 @app.route("/reported", methods=["POST", "GET"])
 def reported():
-    return render_template("reported.html")
+    return render_template("reported.html", values=playersDB.query.order_by(playersDB.numR.desc(), playersDB._id).all())
     
 if __name__ == '__main__':
     with app.app_context():

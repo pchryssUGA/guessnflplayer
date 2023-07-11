@@ -25,9 +25,11 @@ def gen():
             else:
                 return render_template("gen.html", value="blank")     
         elif (request.form["submit"] == "Report This Player"):
+            playerID = int(request.form["pick_team"])
+            currPlayer = playersDB.query.filter_by(_id=playerID).first()
+            currPlayer.numR = currPlayer.numR + 1
+            db.session.commit()
             return render_template("reported.html")     
-
-        
     else:
         return render_template("gen.html", value="blank")
     
