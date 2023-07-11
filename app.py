@@ -5,6 +5,7 @@ from db import db
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql.expression import func, select
 from models import players
+from flask_migrate import Migrate
 import random
 
 app = Flask("__main__")
@@ -14,6 +15,7 @@ app.register_blueprint(gen_blueprint, url_prefix="/gen")
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///posts.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db.init_app(app) # to add the app inside SQLAlchemy()
+migrate = Migrate(app, db)
 
 
 @app.route("/", methods=["POST", "GET"] )
@@ -46,6 +48,15 @@ def clear():
         return redirect(url_for("view"))
     else:
         return render_template("clear.html")
+    
+@app.route("/reported", methods=["POST", "GET"])
+def reported():
+    if request.method == "POST":
+        convertPlayer = reports("hello", "ayy", "bruhh", 0)
+        db.session.add(convertPlayer)
+        db.session.commit()
+        return render_template("reported.html")
+    return render_template("reported.html")
     
 if __name__ == '__main__':
     with app.app_context():
