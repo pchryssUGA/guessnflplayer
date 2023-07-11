@@ -2,6 +2,6 @@
 {% block title%}Players{% endblock%}
 {% block content%}
     {% for item in values%}
-        <p> {{item.numC}}/{{item.numG}} ~ Name: {{item.name}}, Team: {{item.team}}, Year: {{item.year}}, URL: {{item.url}}</p>
+        <p> {{item.numC}}/{{item.numG}} ~ Name: {{item.name}}, Team: {{item.team}}, Year: {{item.year}}, URL: {{item.url}}, Reports: {{item.numR}}</p>
     {% endfor %}
 {% endblock %}
