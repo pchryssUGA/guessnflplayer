@@ -4,7 +4,7 @@ from gen import gen_blueprint
 from db import db
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql.expression import func, select
-from models import players
+from models import playersDB
 from flask_migrate import Migrate
 import random
 
@@ -29,7 +29,7 @@ def new():
         name = request.form["nm"]
         team = request.form["tm"]
         url = request.form["lk"]
-        usr = players(name, team, 2021, url, 0, 0)
+        usr = playersDB(name, team, 2021, url, 0, 0)
         db.session.add(usr)
         db.session.commit()
         return redirect(url_for("view"))
@@ -38,12 +38,12 @@ def new():
 
 @app.route("/view")
 def view():
-    return render_template("view.html", values=players.query.all())
+    return render_template("view.html", values=playersDB.query.all())
 
 @app.route("/clear", methods=["POST", "GET"])
 def clear():
     if request.method == "POST":
-        db.session.query(players).delete()
+        db.session.query(playersDB).delete()
         db.session.commit()
         return redirect(url_for("view"))
     else:
@@ -51,11 +51,6 @@ def clear():
     
 @app.route("/reported", methods=["POST", "GET"])
 def reported():
-    if request.method == "POST":
-        convertPlayer = reports("hello", "ayy", "bruhh", 0)
-        db.session.add(convertPlayer)
-        db.session.commit()
-        return render_template("reported.html")
     return render_template("reported.html")
     
 if __name__ == '__main__':

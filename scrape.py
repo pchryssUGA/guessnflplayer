@@ -1,11 +1,11 @@
 from flask import Flask, Blueprint, render_template, request, redirect, url_for
 from db import db
 from flask_sqlalchemy import SQLAlchemy
-#from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup
 import pandas as pd
 import requests
 import json
-from models import players
+from models import playersDB
 
 
 API = "https://customsearch.googleapis.com/customsearch/v1?"
@@ -63,7 +63,7 @@ def run(tm, sd, ed):
                     playerArray.append(Person(player, year, imageLink))
     playerArray = sorted(playerArray, key=lambda x: x.year)
     for player in playerArray:
-        newPlayer = players(player.name, tm, year, player.url, 0, 0)
+        newPlayer = playersDB(player.name, tm, year, player.url, 0, 0, 0)
         db.session.add(newPlayer)
     db.session.commit()
     
