@@ -2,6 +2,11 @@
 {% block title%}Scrape{% endblock %}
 {% block content %}
 <form action="#" method="post">
+    <input type="hidden" name="scrape_type" value="dummy">
+    <button>Dummy Scrape</button>
+</form>
+<form action="#" method="post">
+    <input type="hidden" name="scrape_type" value="real">
     <p>Team<input type="text" name="tm" placeholder="Enter Team"/></p>
     <p>Start Year<input type="text" name="sd" placeholder="Enter Start Year"/></p>
     <p>End Year<input type="text" name="ed" placeholder="Enter End Year"/></p>

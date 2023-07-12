@@ -36,21 +36,21 @@ def new():
     else:
         return render_template("new.html")
 
-@app.route("/view")
+@app.route("/view", methods=["POST", "GET"])
 def view():
-    return render_template("view.html", values=playersDB.query.all())
-
-@app.route("/clear", methods=["POST", "GET"])
-def clear():
     if request.method == "POST":
         db.session.query(playersDB).delete()
         db.session.commit()
-        return redirect(url_for("view"))
-    else:
-        return render_template("clear.html")
+        return render_template("view.html", values=playersDB.query.all())
+    return render_template("view.html", values=playersDB.query.all())
+
     
 @app.route("/reported", methods=["POST", "GET"])
 def reported():
+    if request.method == "POST":
+        for player in playersDB.query.all():
+            player.numR = 0
+        return render_template("reported.html", values=playersDB.query.order_by(playersDB.numR.desc(), playersDB._id).all())
     return render_template("reported.html", values=playersDB.query.order_by(playersDB.numR.desc(), playersDB._id).all())
     
 if __name__ == '__main__':

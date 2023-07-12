@@ -25,10 +25,27 @@ scrape_blueprint = Blueprint("scrape", __name__, static_folder="static", templat
 @scrape_blueprint.route("/", methods=["POST", "GET"])
 def scrape():
     if request.method == "POST":
-        team = request.form["tm"]
-        startDate = request.form["sd"]
-        endDate = request.form["ed"]
-        run(team, startDate, endDate)
+        if request.form["scrape_type"] == "real":
+            team = request.form["tm"]
+            startDate = request.form["sd"]
+            endDate = request.form["ed"]
+            run(team, startDate, endDate)
+            return render_template("scrape.html")
+        elif request.form["scrape_type"] == "dummy":
+            zach = playersDB("Zach Wilson", "nyj", 2021, "https://i2-prod.mirror.co.uk/incoming/article29751424.ece/ALTERNATES/n615/0_GettyImages-1345565987.jpg", 0, 0, 0)
+            michael = playersDB("Michael Carter", "nyj", 2021, "https://jetsxfactor.com/wp-content/uploads/2022/05/Michael-Carter-II-NY-Jets-PFF-Stats-Duke-2021-Draft-Pick.jpg", 0, 0, 0)
+            keelan = playersDB("Keelan Cole", "nyj", 2021, "https://jetsxfactor.com/wp-content/uploads/2021/03/Keelan-Cole-Jets.jpg", 0, 0, 0)
+            corey = playersDB("Corey Davis", "nyj", 2021, "https://jetsxfactor.com/wp-content/uploads/2021/11/Ryan-Griffin-Elijah-Moore-NY-Jets-GM-Joe-Douglas.jpg", 0, 0, 0)
+            ryan = playersDB("Ryan Griffin", "nyj", 2021, "https://jetsxfactor.com/wp-content/uploads/2021/09/Mike-LaFleur-Scheme-Film-NY-Jets-Trevon-Wesco-2021.jpg", 0, 0, 0)
+            trevon = playersDB("Trevon Wesco", "nyj", 2021, "https://jetsxfactor.com/wp-content/uploads/2021/12/George-Fant-Helmet-NY-Jets-Stats-PFF-Grade-Contract.jpg", 0, 0, 0)
+            db.session.add(zach)
+            db.session.add(michael)
+            db.session.add(keelan)
+            db.session.add(corey)
+            db.session.add(ryan)
+            db.session.add(trevon)
+            db.session.commit()
+            return render_template("scrape.html")
     return render_template("scrape.html")
 
 def run(tm, sd, ed):
