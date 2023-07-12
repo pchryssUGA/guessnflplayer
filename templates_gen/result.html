@@ -3,7 +3,8 @@
 {% block style %}{% endblock%}
 {% block content%}
     <h1>{{values[0]}} The player was {{values[1].name}}!</h1>
-    <form action="/gen" method="POST">
-        <button name= "pick_team" value = {{values[1].team}}>Generate New Player</button>
+    <form action="/gen" method="post">
+        <input type="hidden" name="pick_team" value="{{values[1].team}}">
+        <input type="submit" name="submit" value="Generate a New Player"></p>
     </form>
 {% endblock %}

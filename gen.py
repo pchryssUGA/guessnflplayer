@@ -26,10 +26,18 @@ def gen():
                 return render_template("gen.html", value="blank")     
         elif (request.form["submit"] == "Report This Player"):
             playerID = int(request.form["pick_team"])
-            currPlayer = playersDB.query.filter_by(_id=playerID).first()
-            currPlayer.numR = currPlayer.numR + 1
+            reportPlayer = playersDB.query.filter_by(_id=playerID).first()
+            reportPlayer.numR = reportPlayer.numR + 1
             db.session.commit()
-            return render_template("reported.html")     
+            length = playersDB.query.filter_by(team=reportPlayer.team).order_by(playersDB._id.desc()).first()
+            if length is not None:
+                #first gives the FIRST id of a chosen teams set of players. This gives the code a safe range of ids to randomly select from.
+                first = playersDB.query.filter_by(team=reportPlayer.team).first()
+                num = str(random.randint(first._id, length._id))
+                currPlayer = playersDB.query.filter_by(team=reportPlayer.team).filter_by(_id=num).first()
+                currPlayer.numG = currPlayer.numG + 1
+                db.session.commit()
+            return render_template("gen.html", value=currPlayer)     
     else:
         return render_template("gen.html", value="blank")
     
