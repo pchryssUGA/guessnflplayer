@@ -3,18 +3,32 @@ body {
     background-color: #EAEAEA;
 }
 
-.navbar {
-}
+
 
 .title {
     text-align: center;
     padding: 10px;
 }
 
+.main_div {
+ 
+}
+
+.yearRange {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.dropdown_div {
+    display: flex;
+    justify-content: center;
+}
+
+
 .logo_div {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 2fr));
-    grid-row-gap: 80px;
+    grid-row-gap: 30px;
     grid-column-gap: 50px;
 
 }
