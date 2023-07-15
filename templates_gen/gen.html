@@ -11,6 +11,9 @@
         </div>
         <div class="guess_div">
             <form action = "result{{values[0].name}}" method="post">
+                <input type="hidden" name="pick_team" value="{{values[0].team}}">
+                <input type="hidden" name="from_range" value="{{values[1]}}">
+                <input type="hidden" name="to_range" value="{{values[2]}}">
                 <p>Guess Player <input type="text" name="guess" placeholder="Enter Guess" autocomplete="off"/><input id="submit_button" type="submit" value="submit" /></p>
             </form>
         </div>
@@ -25,7 +28,10 @@
         </div>
         <div class="report_div">
             <form action="#" method="POST">
-                <input type="hidden" name="pick_team" value="{{values[0]._id}}">
+                <input type="hidden" name="pick_id" value="{{values[0]._id}}">
+                <input type="hidden" name="pick_team" value="{{values[0].team}}">
+                <input type="hidden" name="from_range" value="{{values[1]}}">
+                <input type="hidden" name="to_range" value="{{values[2]}}">
                 <p>Image broken? <input type="submit" name="submit" value="Report This Player"></p>
             </form>
         </div>
