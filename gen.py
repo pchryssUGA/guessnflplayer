@@ -18,7 +18,7 @@ def gen():
             length = playersDB.query.filter_by(team=pickTeam).filter(playersDB.year >= fromVal).filter(playersDB.year <= toVal).order_by(playersDB._id.desc()).first()
             if length is not None:
                 #first gives the FIRST id of a chosen teams set of players. This gives the code a safe range of ids to randomly select from.
-                first = playersDB.query.filter_by(team=pickTeam).first()
+                first = playersDB.query.filter_by(team=pickTeam).filter(playersDB.year >= fromVal).filter(playersDB.year <= toVal).first()
                 num = str(random.randint(first._id, length._id))
                 currPlayer = playersDB.query.filter_by(team=pickTeam).filter(playersDB.year >= fromVal).filter(playersDB.year <= toVal).filter_by(_id=num).first()
                 currPlayer.numG = currPlayer.numG + 1
@@ -27,16 +27,15 @@ def gen():
             else:
                 return render_template("gen.html", value="blank")     
 
-
         elif (request.form["submit"] == "Generate a New Player"):
             fromVal = request.form["from_range"]
             toVal = request.form["to_range"]
             pickTeam = request.form["pick_team"]
             #length gives the LAST id of a chosen teams set of players. If length is none, players exist for this team
-            length = playersDB.query.filter_by(team=pickTeam).order_by(playersDB._id.desc()).first()
+            length = playersDB.query.filter_by(team=pickTeam).filter(playersDB.year >= fromVal).filter(playersDB.year <= toVal).order_by(playersDB._id.desc()).first()
             if length is not None:
                 #first gives the FIRST id of a chosen teams set of players. This gives the code a safe range of ids to randomly select from.
-                first = playersDB.query.filter_by(team=pickTeam).first()
+                first = playersDB.query.filter_by(team=pickTeam).filter(playersDB.year >= fromVal).filter(playersDB.year <= toVal).first()
                 num = str(random.randint(first._id, length._id))
                 currPlayer = playersDB.query.filter_by(team=pickTeam).filter(playersDB.year >= fromVal).filter(playersDB.year <= toVal).filter_by(_id=num).first()
                 currPlayer.numG = currPlayer.numG + 1
@@ -45,19 +44,24 @@ def gen():
             else:
                 return render_template("gen.html", value="blank")     
         elif (request.form["submit"] == "Report This Player"):
-            playerID = int(request.form["pick_team"])
+            fromVal = request.form["from_range"]
+            toVal = request.form["to_range"]
+            pickTeam = request.form["pick_team"]
+            playerID = int(request.form["pick_id"])
             reportPlayer = playersDB.query.filter_by(_id=playerID).first()
             reportPlayer.numR = reportPlayer.numR + 1
             db.session.commit()
-            length = playersDB.query.filter_by(team=reportPlayer.team).order_by(playersDB._id.desc()).first()
+            length = playersDB.query.filter_by(team=pickTeam).filter(playersDB.year >= fromVal).filter(playersDB.year <= toVal).order_by(playersDB._id.desc()).first()
             if length is not None:
                 #first gives the FIRST id of a chosen teams set of players. This gives the code a safe range of ids to randomly select from.
-                first = playersDB.query.filter_by(team=reportPlayer.team).first()
+                first = playersDB.query.filter_by(team=pickTeam).filter(playersDB.year >= fromVal).filter(playersDB.year <= toVal).first()
                 num = str(random.randint(first._id, length._id))
-                currPlayer = playersDB.query.filter_by(team=reportPlayer.team).filter_by(_id=num).first()
+                currPlayer = playersDB.query.filter_by(team=pickTeam).filter(playersDB.year >= fromVal).filter(playersDB.year <= toVal).filter_by(_id=num).first()
                 currPlayer.numG = currPlayer.numG + 1
                 db.session.commit()
-            return render_template("gen.html", value=currPlayer)     
+                return render_template("gen.html", values=[currPlayer, fromVal, toVal]) 
+            else:
+                return render_template("gen.html", value="blank")     
     else:
         return render_template("gen.html", value="blank")
     
@@ -65,10 +69,12 @@ def gen():
 @gen_blueprint.route("/result<name>", methods=["POST", "GET"])
 def result(name):
     dbPlayer = playersDB.query.filter_by(name=name).first()
+    fromYear = request.form["from_range"]
+    toYear = request.form["to_range"]
     guess = request.form["guess"]
     if guess == name:
         dbPlayer.numC = dbPlayer.numC + 1
         db.session.commit()
-        return render_template("result.html", values=["Correct :)", dbPlayer])
+        return render_template("result.html", values=["Correct :)", dbPlayer, fromYear, toYear])
     else:
-        return render_template("result.html", values=["Incorrect :(", dbPlayer])
+        return render_template("result.html", values=["Incorrect :(", dbPlayer, fromYear, toYear])

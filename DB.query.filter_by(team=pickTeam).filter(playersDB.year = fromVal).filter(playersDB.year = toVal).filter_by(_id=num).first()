@@ -1,0 +1,16 @@
+* [33m3a61d4d[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m Add ability to pick year range
+* [33ma4a18c9[m Add dummy scrape and fixed /result generate button
+* [33m02bf02e[m Add report system
+* [33m0fab333[m Add reports column to db
+* [33md1ced49[m Commit before editing players db
+* [33m4b20e01[m Add report button, no functionality
+* [33m051262f[m Fix result page functionality and add styling
+* [33m51281d5[m Add logos to logos folder and allow users to click logos to choose team
+* [33m21386ed[m Allow user to pick a team to generate
+* [33me02acf1[m Change image search API query. Create seperate file for generating.
+* [33m1031ea2[m Transfer db to models.py & create scraping function
+* [33m797753a[m Add scraping blueprint
+* [33mf77c8d1[m Add update to db after guess
+* [33m1708d16[m Add correct/incorrect function
+* [33m36c0ae5[m test commit
+* [33m8c1f348[m init

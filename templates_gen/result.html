@@ -11,6 +11,8 @@
     <div class="generate_div">
         <form action="/gen" method="post">
             <input type="hidden" name="pick_team" value="{{values[1].team}}">
+            <input type="hidden" name="from_range" value="{{values[2]}}">
+            <input type="hidden" name="to_range" value="{{values[3]}}">
             <input type="submit" name="submit" value="Generate a New Player"></p>
         </form>
     </div>
