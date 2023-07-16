@@ -10,10 +10,10 @@ gen_blueprint = Blueprint("gen", __name__, static_folder="static", template_fold
 def gen():
     #gen is only generated from a POST request, code should never get passed the if
     if request.method == "POST":
+        fromVal = request.form["from_range"]
+        toVal = request.form["to_range"]
+        pickTeam = request.form["pick_team"]
         if (request.form["submit"] == "First Generate"):
-            fromVal = request.form["from_range"]
-            toVal = request.form["to_range"]
-            pickTeam = request.form["pick_team"]
             #length gives the LAST id of a chosen teams set of players. If length is none, players exist for this team
             length = playersDB.query.filter_by(team=pickTeam).filter(playersDB.year >= fromVal).filter(playersDB.year <= toVal).order_by(playersDB._id.desc()).first()
             if length is not None:
@@ -26,11 +26,7 @@ def gen():
                 return render_template("gen.html", values=[currPlayer, fromVal, toVal])
             else:
                 return render_template("gen.html", value="blank")     
-
         elif (request.form["submit"] == "Generate a New Player"):
-            fromVal = request.form["from_range"]
-            toVal = request.form["to_range"]
-            pickTeam = request.form["pick_team"]
             #length gives the LAST id of a chosen teams set of players. If length is none, players exist for this team
             length = playersDB.query.filter_by(team=pickTeam).filter(playersDB.year >= fromVal).filter(playersDB.year <= toVal).order_by(playersDB._id.desc()).first()
             if length is not None:
@@ -44,9 +40,6 @@ def gen():
             else:
                 return render_template("gen.html", value="blank")     
         elif (request.form["submit"] == "Report This Player"):
-            fromVal = request.form["from_range"]
-            toVal = request.form["to_range"]
-            pickTeam = request.form["pick_team"]
             playerID = int(request.form["pick_id"])
             reportPlayer = playersDB.query.filter_by(_id=playerID).first()
             reportPlayer.numR = reportPlayer.numR + 1

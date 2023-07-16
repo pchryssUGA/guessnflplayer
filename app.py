@@ -6,8 +6,9 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql.expression import func, select
 from models import playersDB
 from flask_migrate import Migrate
-import random
-
+import openai
+import os
+openai.api_key = os.getenv("OPENAI_API_KEY")
 app = Flask("__main__")
 app.register_blueprint(scrape_blueprint, url_prefix="/scrape")
 app.register_blueprint(gen_blueprint, url_prefix="/gen")
@@ -24,6 +25,13 @@ def home():
  
 @app.route("/new", methods=["POST", "GET"])
 def new():
+    output = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=[{"role": "user",
+        "content":
+                    "Write a 5 sentance summary about Corey Davis's career with the New York Jets. Be certain to include when he joined the team(year), how he joined the team(drafted, traded for, or signed as free agent), how he left the team (year), and how he left the team (traded, cut, or retired) or if he still on the team. "}]
+    )
+    print(output.choices[0].message.content)
     name = None
     if request.method == "POST":
         name = request.form["nm"]
