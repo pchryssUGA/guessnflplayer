@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title%}Players{% endblock%}
+{% block content%}
+    <form action="report" method="post">
+        <button>Clear Reports</button>
+    </form>
+    {% for item in values%}
+        <p>ID: {{item._id}}, Name: {{item.name}}, Reports: {{item.numR}}</p>
+    {% endfor %}
+{% endblock %}

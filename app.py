@@ -1,6 +1,7 @@
 from flask import Flask, redirect, url_for, render_template, request, session
 from scrape import scrape_blueprint
 from gen import gen_blueprint
+from report import report_blueprint
 from db import db
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql.expression import func, select
@@ -14,6 +15,7 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 app = Flask("__main__")
 app.register_blueprint(scrape_blueprint, url_prefix="/scrape")
 app.register_blueprint(gen_blueprint, url_prefix="/gen")
+app.register_blueprint(report_blueprint, url_prefix="/report")
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///posts.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -26,20 +28,6 @@ teams = {"nyj": "New York Jets"}
 @app.route("/", methods=["POST", "GET"] )
 def home():
     return render_template("index.html")
- 
-@app.route("/new", methods=["POST", "GET"])
-def new():
-    name = None
-    if request.method == "POST":
-        name = request.form["nm"]
-        team = request.form["tm"]
-        url = request.form["lk"]
-        usr = player_database(name, team, 2021, url, 0, 0)
-        db.session.add(usr)
-        db.session.commit()
-        return redirect(url_for("view"))
-    else:
-        return render_template("new.html")
     
 @app.route("/ai", methods=["POST", "GET"])
 def ai():
@@ -68,14 +56,6 @@ def view():
         return render_template("view.html", values=player_database.query.all())
     return render_template("view.html", values=player_database.query.all())
 
-    
-@app.route("/reported", methods=["POST", "GET"])
-def reported():
-    if request.method == "POST":
-        for player in player_database.query.all():
-            player.numR = 0
-        return render_template("reported.html", values=player_database.query.order_by(player_database.numR.desc(), player_database._id).all())
-    return render_template("reported.html", values=player_database.query.order_by(player_database.numR.desc(), player_database._id).all())
     
 if __name__ == '__main__':
     with app.app_context():
