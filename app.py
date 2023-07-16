@@ -8,7 +8,13 @@ from models import playersDB
 from flask_migrate import Migrate
 import openai
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 openai.api_key = os.getenv("OPENAI_API_KEY")
+
+
 app = Flask("__main__")
 app.register_blueprint(scrape_blueprint, url_prefix="/scrape")
 app.register_blueprint(gen_blueprint, url_prefix="/gen")
@@ -25,6 +31,7 @@ def home():
  
 @app.route("/new", methods=["POST", "GET"])
 def new():
+    print(openai.api_key)
     output = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=[{"role": "user",
