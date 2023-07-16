@@ -6,11 +6,14 @@ import pandas as pd
 import requests
 import json
 from models import playersDB
-
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
 API = "https://customsearch.googleapis.com/customsearch/v1?"
-CX =  "f536d3219ef1947fe"
-KEY = "AIzaSyBBffsTeEwCTc8sZjEmo9vrO0ndJo2E8jw"
+KEY = os.getenv("GOOGLE_API_KEY")
+CX = os.getenv("GOOGLE_API_CX")
+
 playerArray = []
 playerArray = []
 nameSet = set()

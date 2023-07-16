@@ -1,8 +1,6 @@
 from flask import Flask, redirect, url_for, render_template, request, session
 from scrape import scrape_blueprint
 from gen import gen_blueprint
-from scrape import scrape_blueprint
-from gen import gen_blueprint
 from db import db
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql.expression import func, select
@@ -11,16 +9,9 @@ from flask_migrate import Migrate
 import openai
 import os
 from dotenv import load_dotenv
-
 load_dotenv()
-
 openai.api_key = os.getenv("OPENAI_API_KEY")
-
-
 app = Flask("__main__")
-app.register_blueprint(scrape_blueprint, url_prefix="/scrape")
-app.register_blueprint(gen_blueprint, url_prefix="/gen")
-
 app.register_blueprint(scrape_blueprint, url_prefix="/scrape")
 app.register_blueprint(gen_blueprint, url_prefix="/gen")
 
@@ -31,16 +22,11 @@ migrate = Migrate(app, db)
 
 
 @app.route("/", methods=["POST", "GET"] )
-migrate = Migrate(app, db)
-
-
-@app.route("/", methods=["POST", "GET"] )
 def home():
     return render_template("index.html")
  
 @app.route("/new", methods=["POST", "GET"])
 def new():
-    print(openai.api_key)
     output = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=[{"role": "user",
@@ -54,7 +40,6 @@ def new():
         team = request.form["tm"]
         url = request.form["lk"]
         usr = playersDB(name, team, 2021, url, 0, 0)
-        usr = playersDB(name, team, 2021, url, 0, 0)
         db.session.add(usr)
         db.session.commit()
         return redirect(url_for("view"))
@@ -62,26 +47,13 @@ def new():
         return render_template("new.html")
 
 @app.route("/view", methods=["POST", "GET"])
-@app.route("/view", methods=["POST", "GET"])
 def view():
     if request.method == "POST":
-        db.session.query(playersDB).delete()
         db.session.query(playersDB).delete()
         db.session.commit()
         return render_template("view.html", values=playersDB.query.all())
     return render_template("view.html", values=playersDB.query.all())
-        return render_template("view.html", values=playersDB.query.all())
-    return render_template("view.html", values=playersDB.query.all())
 
-    
-@app.route("/reported", methods=["POST", "GET"])
-def reported():
-    if request.method == "POST":
-        for player in playersDB.query.all():
-            player.numR = 0
-        return render_template("reported.html", values=playersDB.query.order_by(playersDB.numR.desc(), playersDB._id).all())
-    return render_template("reported.html", values=playersDB.query.order_by(playersDB.numR.desc(), playersDB._id).all())
-    
     
 @app.route("/reported", methods=["POST", "GET"])
 def reported():
