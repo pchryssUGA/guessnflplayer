@@ -4,6 +4,15 @@
     justify-content: center;
 }
 
+.desc_div {
+    display: flex;
+    justify-content: center;
+}
+
+.description {
+    width: 500px;
+}
+
 #image {
     height: 300px;
     min-width: 500px;

@@ -8,6 +8,9 @@
     <div class="img_div">
         <img id="image" src={{values[1].url}}>
     </div>
+    <div class="desc_div">
+        <p class="description">"{{values[1].desc}}"</p>
+    </div>
     <div class="generate_div">
         <form action="/gen" method="post">
             <input type="hidden" name="pick_team" value="{{values[1].team}}">
