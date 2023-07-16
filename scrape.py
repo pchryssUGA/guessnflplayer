@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import requests
 import json
-from models import playersDB
+from models import player_database
 from dotenv import load_dotenv
 import os
 load_dotenv()
@@ -35,12 +35,12 @@ def scrape():
             run(team, startDate, endDate)
             return render_template("scrape.html")
         elif request.form["scrape_type"] == "dummy":
-            zach = playersDB("Zach Wilson", "nyj", 2021, "https://i2-prod.mirror.co.uk/incoming/article29751424.ece/ALTERNATES/n615/0_GettyImages-1345565987.jpg", 0, 0, 0)
-            michael = playersDB("Michael Carter", "nyj", 2021, "https://jetsxfactor.com/wp-content/uploads/2022/05/Michael-Carter-II-NY-Jets-PFF-Stats-Duke-2021-Draft-Pick.jpg", 0, 0, 0)
-            keelan = playersDB("Keelan Cole", "nyj", 2021, "https://jetsxfactor.com/wp-content/uploads/2021/03/Keelan-Cole-Jets.jpg", 0, 0, 0)
-            corey = playersDB("Corey Davis", "nyj", 2021, "https://jetsxfactor.com/wp-content/uploads/2021/11/Ryan-Griffin-Elijah-Moore-NY-Jets-GM-Joe-Douglas.jpg", 0, 0, 0)
-            ryan = playersDB("Ryan Griffin", "nyj", 2021, "https://jetsxfactor.com/wp-content/uploads/2021/09/Mike-LaFleur-Scheme-Film-NY-Jets-Trevon-Wesco-2021.jpg", 0, 0, 0)
-            trevon = playersDB("Trevon Wesco", "nyj", 2021, "https://jetsxfactor.com/wp-content/uploads/2021/12/George-Fant-Helmet-NY-Jets-Stats-PFF-Grade-Contract.jpg", 0, 0, 0)
+            zach = player_database("Zach Wilson", "nyj", 2021, "https://i2-prod.mirror.co.uk/incoming/article29751424.ece/ALTERNATES/n615/0_GettyImages-1345565987.jpg", "hi", 0, 0, 0)
+            michael = player_database("Michael Carter", "nyj", 2021, "https://jetsxfactor.com/wp-content/uploads/2022/05/Michael-Carter-II-NY-Jets-PFF-Stats-Duke-2021-Draft-Pick.jpg", "hi", 0, 0, 0)
+            keelan = player_database("Keelan Cole", "nyj", 2021, "https://jetsxfactor.com/wp-content/uploads/2021/03/Keelan-Cole-Jets.jpg", "hi", 0, 0, 0)
+            corey = player_database("Corey Davis", "nyj", 2021, "https://jetsxfactor.com/wp-content/uploads/2021/11/Ryan-Griffin-Elijah-Moore-NY-Jets-GM-Joe-Douglas.jpg", "hi", 0, 0, 0)
+            ryan = player_database("Ryan Griffin", "nyj", 2021, "https://jetsxfactor.com/wp-content/uploads/2021/09/Mike-LaFleur-Scheme-Film-NY-Jets-Trevon-Wesco-2021.jpg", "hi", 0, 0, 0)
+            trevon = player_database("Trevon Wesco", "nyj", 2021, "https://jetsxfactor.com/wp-content/uploads/2021/12/George-Fant-Helmet-NY-Jets-Stats-PFF-Grade-Contract.jpg", "hi", 0, 0, 0)
             db.session.add(zach)
             db.session.add(michael)
             db.session.add(keelan)
@@ -83,7 +83,7 @@ def run(tm, sd, ed):
                     playerArray.append(Person(player, year, imageLink))
     playerArray = sorted(playerArray, key=lambda x: x.year)
     for player in playerArray:
-        newPlayer = playersDB(player.name, tm, year, player.url, 0, 0, 0)
+        newPlayer = player_database(player.name, tm, year, player.url, "",  0, 0, 0)
         db.session.add(newPlayer)
     db.session.commit()
     

@@ -5,6 +5,6 @@
         <button>Clear DB</button>
     </form>
     {% for item in values%}
-        <p> {{item._id}}: {{item.numC}}/{{item.numG}} ~ Name: {{item.name}}, Team: {{item.team}}, Year: {{item.year}}, URL: {{item.url}}, Reports: {{item.numR}}</p>
+        <p> {{item._id}}: {{item.numC}}/{{item.numG}} ~ Name: {{item.name}}, Team: {{item.team}}, Year: {{item.year}}, URL: {{item.url}}, Description: {{item.desc}}</p>
     {% endfor %}
 {% endblock %}
