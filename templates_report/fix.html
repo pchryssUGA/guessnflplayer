@@ -1,10 +1,37 @@
 {% extends "base.html" %}
 {% block title%}Players{% endblock%}
+{% block style %}{{url_for("static", filename="styles/report.css")}}{% endblock%}
 {% block content%}
-    <form action="report" method="post">
-        <button>Clear Reports</button>
+    <form action="#" method="POST">
+        <div class="img_div">
+            <input type="hidden" name="id" value="{{values[0]._id}}">
+            <input type="hidden" name="url" value="{{values[1][0]}}">
+            <img id="image" src={{values[1][0]}}>
+            <p><input class="button" type="submit" value="Pick this image" name="submit"/></p>
+        </div>
     </form>
-    {% for item in values%}
-        <p>ID: {{item._id}}, Name: {{item.name}}, Reports: {{item.numR}}</p>
-    {% endfor %}
+    <form action="#" method="POST">
+        <div class="img_div">
+            <input type="hidden" name="id" value="{{values[0]._id}}">
+            <input type="hidden" name="url" value="{{values[1][1]}}">
+            <img id="image" src={{values[1][1]}}>
+            <p><input class="button" type="submit" value="Pick this image" name="submit"/></p>
+        </div>
+    </form>
+    <form action="#" method="POST">
+        <div class="img_div">
+            <input type="hidden" name="id" value="{{values[0]._id}}">
+            <input type="hidden" name="url" value="{{values[1][2]}}">
+            <img id="image" src={{values[1][2]}}>
+            <p><input class="button" type="submit" value="Pick this image" name="submit"/></p>
+        </div>
+    </form>
+    <form action="#" method="POST">
+        <div class="img_div">
+            <input type="hidden" name="id" value="{{values[0]._id}}">
+            <input type="hidden" name="url" value="{{values[1][3]}}">
+            <img id="image" src={{values[1][3]}}>
+            <p><input class="button" type="submit" value="Pick this image" name="submit"/></p>
+        </div>
+    </form>
 {% endblock %}

@@ -15,7 +15,6 @@ KEY = os.getenv("GOOGLE_API_KEY")
 CX = os.getenv("GOOGLE_API_CX")
 
 playerArray = []
-playerArray = []
 nameSet = set()
 
 class Person:
