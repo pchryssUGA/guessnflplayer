@@ -3,8 +3,20 @@ from db import db
 from flask_sqlalchemy import SQLAlchemy
 from models import player_database
 import random
+import requests
 
 gen_blueprint = Blueprint("gen", __name__, static_folder="static", template_folder="templates_gen")
+
+def call_lambda(reportedID):
+    api = "https://vksmetkcme.execute-api.us-east-2.amazonaws.com/test/transactions?"
+    id = str(reportedID)
+    fixPlayer = player_database.query.filter_by(_id=int(id)).first()
+    name = fixPlayer.name
+    url = fixPlayer.url
+    response = requests.get(api + "playerID=" + id + "&playerName=" + name + "&playerURL=" + url)
+    returned = response.json()
+    print(returned)
+
 
 @gen_blueprint.route("/", methods=["POST", "GET"])
 def gen():
@@ -44,6 +56,8 @@ def gen():
             reportPlayer = player_database.query.filter_by(_id=playerID).first()
             reportPlayer.numR = reportPlayer.numR + 1
             db.session.commit()
+            if reportPlayer.numR == 3:
+                call_lambda(reportPlayer._id)
             length = player_database.query.filter_by(team=pickTeam).filter(player_database.year >= fromVal).filter(player_database.year <= toVal).order_by(player_database._id.desc()).first()
             if length is not None:
                 #first gives the FIRST id of a chosen teams set of players. This gives the code a safe range of ids to randomly select from.

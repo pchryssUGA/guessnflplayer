@@ -9,7 +9,9 @@ from models import player_database
 from flask_migrate import Migrate
 import openai
 import os
+import requests
 from dotenv import load_dotenv
+
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 app = Flask("__main__")

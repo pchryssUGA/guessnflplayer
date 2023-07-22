@@ -13,6 +13,8 @@ CX = os.getenv("GOOGLE_API_CX")
 
 report_blueprint = Blueprint("report", __name__, static_folder="static", template_folder="templates_report")
 
+    
+
 @report_blueprint.route("/", methods=["POST", "GET"])
 def report():
     if request.method == "POST":
