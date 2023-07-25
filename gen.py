@@ -15,21 +15,17 @@ KEY = os.getenv("GOOGLE_API_KEY")
 CX = os.getenv("GOOGLE_API_CX")
 
 def call_lambda(reportedID):
-    api = "https://vksmetkcme.execute-api.us-east-2.amazonaws.com/test/transactions?"
+    api = "https://qv0ge6dcdl.execute-api.us-east-2.amazonaws.com/test/send?"
     id = str(reportedID)
     fixPlayer = player_database.query.filter_by(_id=int(id)).first()
     name = fixPlayer.name
-    
-    images = []
-    player = player_database.query.filter_by(_id=int(id)).first()
-    query = "nfl " + player.name + " playing for " + player.team + " clear image by himself"
+    query = "nfl " + fixPlayer.name + " playing for " + fixPlayer.team + " clear image by himself"
     response = requests.get(API+"cx="+CX+"&num=4&q="+query+"&searchType=image&access_token="+KEY+"&key="+KEY)
     json = response.json()
     imageOne = json["items"][0]["link"]
     imageTwo = json["items"][1]["link"]
     imageThree = json["items"][2]["link"]
     imageFour = json["items"][3]["link"]
-
     
     response = requests.get(api + "playerID=" + id + "&playerName=" + name + "&imageOne=" + imageOne + "&imageTwo=" + imageTwo + "&imageThree=" + imageThree + "&imageFour=" + imageFour)
     returned = response.json()

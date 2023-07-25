@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import requests
 import json
-from models import player_database
+#from models import player_database
 from dotenv import load_dotenv
 import os
 load_dotenv()
@@ -23,9 +23,9 @@ class Person:
         self.year = year
         self.url = url
 
-scrape_blueprint = Blueprint("scrape", __name__, static_folder="static", template_folder="templates")
-@scrape_blueprint.route("/", methods=["POST", "GET"])
-def scrape():
+#scrape_blueprint = Blueprint("scrape", __name__, static_folder="static", template_folder="templates")
+#@scrape_blueprint.route("/", methods=["POST", "GET"])
+def scrape(database):
     if request.method == "POST":
         if request.form["scrape_type"] == "real":
             team = request.form["tm"]
@@ -34,12 +34,12 @@ def scrape():
             run(team, startDate, endDate)
             return render_template("scrape.html")
         elif request.form["scrape_type"] == "dummy":
-            zach = player_database("Zach Wilson", "nyj", 2021, "https://i2-prod.mirror.co.uk/incoming/article29751424.ece/ALTERNATES/n615/0_GettyImages-1345565987.jpg", "hi", 0, 0, 0)
-            michael = player_database("Michael Carter", "nyj", 2021, "https://jetsxfactor.com/wp-content/uploads/2022/05/Michael-Carter-II-NY-Jets-PFF-Stats-Duke-2021-Draft-Pick.jpg", "hi", 0, 0, 0)
-            keelan = player_database("Keelan Cole", "nyj", 2021, "https://jetsxfactor.com/wp-content/uploads/2021/03/Keelan-Cole-Jets.jpg", "hi", 0, 0, 0)
-            corey = player_database("Corey Davis", "nyj", 2021, "https://jetsxfactor.com/wp-content/uploads/2021/11/Ryan-Griffin-Elijah-Moore-NY-Jets-GM-Joe-Douglas.jpg", "hi", 0, 0, 0)
-            ryan = player_database("Ryan Griffin", "nyj", 2021, "https://jetsxfactor.com/wp-content/uploads/2021/09/Mike-LaFleur-Scheme-Film-NY-Jets-Trevon-Wesco-2021.jpg", "hi", 0, 0, 0)
-            trevon = player_database("Trevon Wesco", "nyj", 2021, "https://jetsxfactor.com/wp-content/uploads/2021/12/George-Fant-Helmet-NY-Jets-Stats-PFF-Grade-Contract.jpg", "hi", 0, 0, 0)
+            zach = database("Zach Wilson", "nyj", 2021, "https://i2-prod.mirror.co.uk/incoming/article29751424.ece/ALTERNATES/n615/0_GettyImages-1345565987.jpg", "hi", 0, 0, 0)
+            michael = database("Michael Carter", "nyj", 2021, "https://jetsxfactor.com/wp-content/uploads/2022/05/Michael-Carter-II-NY-Jets-PFF-Stats-Duke-2021-Draft-Pick.jpg", "hi", 0, 0, 0)
+            keelan = database("Keelan Cole", "nyj", 2021, "https://jetsxfactor.com/wp-content/uploads/2021/03/Keelan-Cole-Jets.jpg", "hi", 0, 0, 0)
+            corey = database("Corey Davis", "nyj", 2021, "https://jetsxfactor.com/wp-content/uploads/2021/11/Ryan-Griffin-Elijah-Moore-NY-Jets-GM-Joe-Douglas.jpg", "hi", 0, 0, 0)
+            ryan = database("Ryan Griffin", "nyj", 2021, "https://jetsxfactor.com/wp-content/uploads/2021/09/Mike-LaFleur-Scheme-Film-NY-Jets-Trevon-Wesco-2021.jpg", "hi", 0, 0, 0)
+            trevon = database("Trevon Wesco", "nyj", 2021, "https://jetsxfactor.com/wp-content/uploads/2021/12/George-Fant-Helmet-NY-Jets-Stats-PFF-Grade-Contract.jpg", "hi", 0, 0, 0)
             db.session.add(zach)
             db.session.add(michael)
             db.session.add(keelan)
@@ -82,7 +82,7 @@ def run(tm, sd, ed):
                     playerArray.append(Person(player, year, imageLink))
     playerArray = sorted(playerArray, key=lambda x: x.year)
     for player in playerArray:
-        newPlayer = player_database(player.name, tm, year, player.url, "",  0, 0, 0)
+        newPlayer = database(player.name, tm, year, player.url, "",  0, 0, 0)
         db.session.add(newPlayer)
     db.session.commit()
     
