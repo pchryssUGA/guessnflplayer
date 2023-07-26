@@ -37,7 +37,6 @@ def load_user(user_id):
 
 @app.route("/", methods=["POST", "GET"] )
 def home():
-    print(os.urandom(24))
     return render_template("index.html")
     
 @app.route("/ai", methods=["POST", "GET"])
@@ -62,7 +61,7 @@ def ai():
 admin = Admin(app, index_view=MyAdminIndexView())
 admin.add_view(MyModelView(AdminUser, db.session))
 admin.add_view(MyModelView(player_database, db.session))
-admin.add_view(ScrapeView(name="Scrape", endpoint="scrapey"))
+admin.add_view(ScrapeView(name="Scrape", endpoint="scrape"))
 
 @app.route("/login", methods={"POST", "GET"})
 def login():

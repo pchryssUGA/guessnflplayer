@@ -48,4 +48,4 @@ class ScrapeView(BaseView):
     @expose("/", methods=("GET", "POST"))
     def index(self):
         scrape(player_database)
-        return self.render("admin/scrapey.html")
+        return self.render("admin/scrape.html")

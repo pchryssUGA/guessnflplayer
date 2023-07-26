@@ -31,7 +31,7 @@ def scrape(database):
             team = request.form["tm"]
             startDate = request.form["sd"]
             endDate = request.form["ed"]
-            run(team, startDate, endDate)
+            run(database, team, startDate, endDate)
             return render_template("scrape.html")
         elif request.form["scrape_type"] == "dummy":
             zach = database("Zach Wilson", "nyj", 2021, "https://i2-prod.mirror.co.uk/incoming/article29751424.ece/ALTERNATES/n615/0_GettyImages-1345565987.jpg", "hi", 0, 0, 0)
@@ -47,10 +47,8 @@ def scrape(database):
             db.session.add(ryan)
             db.session.add(trevon)
             db.session.commit()
-            return render_template("scrape.html")
-    return render_template("scrape.html")
 
-def run(tm, sd, ed):
+def run(database, tm, sd, ed):
     nameSet = set()
     playerArray = []
     playerArray = []
