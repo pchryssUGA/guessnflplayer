@@ -1,9 +1,11 @@
 from db import db
 from flask_login import UserMixin, LoginManager, current_user
 from flask_admin.contrib.sqla import ModelView
-from flask import Flask, redirect, url_for
+from flask import Flask, redirect, url_for, request
 from flask_admin import Admin, AdminIndexView, BaseView, expose
-from scrape import scrape, run, API, KEY, CX
+from scrape import scrape
+from ai import ai
+from report import report, fix, get_player
 
 class player_database(db.Model):
     _id = db.Column("id", db.Integer, primary_key=True)
@@ -49,3 +51,16 @@ class ScrapeView(BaseView):
     def index(self):
         scrape(player_database)
         return self.render("admin/scrape.html")
+    
+class AiView(BaseView):
+    @expose("/", methods=("GET", "POST"))
+    def index(self):
+        ai(player_database)
+        return self.render("admin/ai.html")
+    
+class ReportView(BaseView):
+    @expose("/", methods=("GET", "POST"))
+    def index(self):            
+        report(player_database)
+        return self.render("admin/report.html", values=player_database.query.order_by(player_database.numR.desc(), player_database._id).all())
+    
