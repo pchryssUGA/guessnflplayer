@@ -1,7 +1,7 @@
 from db import db
 from flask_login import UserMixin, LoginManager, current_user
 from flask_admin.contrib.sqla import ModelView
-from flask import Flask, redirect, url_for, request
+from flask import Flask, redirect, url_for, request, session
 from flask_admin import Admin, AdminIndexView, BaseView, expose
 from scrape import scrape
 from ai import ai
@@ -37,14 +37,18 @@ class AdminUser(db.Model, UserMixin):
 
 class MyModelView(ModelView):
     def is_accessible(self):
-        return current_user.is_authenticated
+        if "admin" in session:
+            return True
+        return False
     
     def inaccessible_callback(self, name, **kwargs):
         return redirect(url_for("login"))
     
 class MyAdminIndexView(AdminIndexView):
     def is_accessible(self):
-        return current_user.is_authenticated
+        if "admin" in session:
+            return True
+        return False
     
 class ScrapeView(BaseView):
     @expose("/", methods=("GET", "POST"))
@@ -52,15 +56,30 @@ class ScrapeView(BaseView):
         scrape(player_database)
         return self.render("admin/scrape.html")
     
+    def is_accessible(self):
+        if "admin" in session:
+            return True
+        return False
+    
 class AiView(BaseView):
     @expose("/", methods=("GET", "POST"))
     def index(self):
         ai(player_database)
         return self.render("admin/ai.html")
     
+    def is_accessible(self):
+        if "admin" in session:
+            return True
+        return False
+    
 class ReportView(BaseView):
     @expose("/", methods=("GET", "POST"))
     def index(self):            
         report(player_database)
         return self.render("admin/report.html", values=player_database.query.order_by(player_database.numR.desc(), player_database._id).all())
+    
+    def is_accessible(self):
+        if "admin" in session:
+            return True
+        return False
     

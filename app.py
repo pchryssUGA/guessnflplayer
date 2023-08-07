@@ -12,12 +12,13 @@ from dotenv import load_dotenv
 from flask_admin import Admin, AdminIndexView
 from flask_login import UserMixin, LoginManager, current_user, login_user, logout_user
 from flask_admin.contrib.sqla import ModelView
+from datetime import timedelta
 
 
 load_dotenv()
 app = Flask("__main__")
 app.register_blueprint(gen_blueprint, url_prefix="/gen")
-#app.register_blueprint(report_blueprint, url_prefix="/report")
+app.permanent_session_lifetime = timedelta(minutes=1)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///posts.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -55,14 +56,16 @@ def login():
         password = request.form["password"]
         question = request.form["question"]
         if username == admin.username and password == admin.password and question == admin.question:
-            login_user(admin)
+            session.permanent = True
+            session["admin"] = "true"
             return "Logged in :)"
     return render_template("login.html")
 
 @app.route("/logout")
 def logout():
-    logout_user()
+    session.pop("admin", None)
     return "Logged Out"
+
     
 if __name__ == '__main__':
     with app.app_context():
