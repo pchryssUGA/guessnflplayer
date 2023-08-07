@@ -10,13 +10,13 @@ API = "https://customsearch.googleapis.com/customsearch/v1?"
 KEY = os.getenv("GOOGLE_API_KEY")
 CX = os.getenv("GOOGLE_API_CX")
 
+#Clears all reports
 def report(database):
-    if request.method == "POST":
-        if request.form["submit"] == "Clear Reports":
-            for player in database.query.all():
-                player.numR = 0
-            db.session.commit()
+    for player in database.query.all():
+        player.numR = 0
+    db.session.commit()
 
+#Changes a players url
 def fix(database):
     url = request.form["url"]
     id = int(request.form["id"])
@@ -25,6 +25,7 @@ def fix(database):
     player.numR = 0
     db.session.commit()
      
+#Calls Google Images API and returns a player object and 4 queried images
 def get_player(database):       
     id = int(request.form["id"])
     images = []
