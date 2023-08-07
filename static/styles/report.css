@@ -1,3 +1,8 @@
+body {
+    font-family: 'Oswald', sans-serif;
+    background-color: #EAEAEA;
+}
+
 #image {
     height: 170px;
     min-width: 350px;

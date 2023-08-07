@@ -1,5 +1,9 @@
 {% extends "admin/master.html" %}
 {% block title%}Scrape{% endblock %}
+{% block head_css %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{url_for("static", filename="styles/style.css")}}">
+{% endblock%}
 {% block body %}
 <form action="#" method="post">
     <input type="hidden" name="scrape_type" value="dummy">

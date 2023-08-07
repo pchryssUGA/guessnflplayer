@@ -1,5 +1,9 @@
 {% extends "admin/master.html" %}
 {% block title%}Players{% endblock%}
+{% block head_css %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{url_for("static", filename="styles/report.css")}}">
+{% endblock%}
 {% block body%}
         <form action="#" method="POST">
             <input type="hidden" name="submit" value="Fix Image">
