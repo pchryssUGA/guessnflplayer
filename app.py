@@ -1,6 +1,6 @@
 from flask import Flask, redirect, url_for, render_template, request, session
 from gen import gen_blueprint
-from report import report_blueprint
+#from report import report_blueprint
 from db import db
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql.expression import func, select
@@ -18,7 +18,7 @@ from datetime import timedelta
 load_dotenv()
 app = Flask("__main__")
 app.register_blueprint(gen_blueprint, url_prefix="/gen")
-app.permanent_session_lifetime = timedelta(minutes=1)
+app.permanent_session_lifetime = timedelta(hours=1)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///posts.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -65,7 +65,6 @@ def login():
 def logout():
     session.pop("admin", None)
     return "Logged Out"
-
     
 if __name__ == '__main__':
     with app.app_context():

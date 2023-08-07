@@ -23,8 +23,6 @@ class Person:
         self.year = year
         self.url = url
 
-#scrape_blueprint = Blueprint("scrape", __name__, static_folder="static", template_folder="templates")
-#@scrape_blueprint.route("/", methods=["POST", "GET"])
 def scrape(database):
     if request.method == "POST":
         if request.form["scrape_type"] == "real":

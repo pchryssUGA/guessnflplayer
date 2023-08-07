@@ -75,6 +75,12 @@ class AiView(BaseView):
 class ReportView(BaseView):
     @expose("/", methods=("GET", "POST"))
     def index(self):            
+        if request.method == "POST":
+            if request.form["submit"] == "Fix Image":
+                data = get_player(player_database)
+                return self.render("admin/fix.html", values=[data[0], data[1]])
+            elif request.form["submit"] == "Pick this image":
+                fix(player_database)
         report(player_database)
         return self.render("admin/report.html", values=player_database.query.order_by(player_database.numR.desc(), player_database._id).all())
     
@@ -82,4 +88,6 @@ class ReportView(BaseView):
         if "admin" in session:
             return True
         return False
+
+    
     

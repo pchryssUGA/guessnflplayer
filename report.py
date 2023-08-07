@@ -10,9 +10,6 @@ API = "https://customsearch.googleapis.com/customsearch/v1?"
 KEY = os.getenv("GOOGLE_API_KEY")
 CX = os.getenv("GOOGLE_API_CX")
 
-report_blueprint = Blueprint("report", __name__, static_folder="static", template_folder="templates_report")
-
-@report_blueprint.route("/", methods=["POST", "GET"])
 def report(database):
     if request.method == "POST":
         if request.form["submit"] == "Clear Reports":
@@ -20,16 +17,13 @@ def report(database):
                 player.numR = 0
             db.session.commit()
 
-@report_blueprint.route("/fix", methods=["POST", "GET"])
-def fix(database, id):
-    if request.method == "POST":
-        if request.form["submit"] == "Pick this image":
-            url = request.form["url"]
-            id = int(request.form["id"])
-            player = database.query.filter_by(_id=id).first()
-            player.url = url
-            player.numR = 0
-            db.session.commit()
+def fix(database):
+    url = request.form["url"]
+    id = int(request.form["id"])
+    player = database.query.filter_by(_id=id).first()
+    player.url = url
+    player.numR = 0
+    db.session.commit()
      
 def get_player(database):       
     id = int(request.form["id"])

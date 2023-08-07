@@ -6,7 +6,6 @@ from flask import request
 teams = {"nyj": "New York Jets"}
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-
 def ai(database):
     if request.method == "POST":
         players = database.query.filter_by(team="nyj").filter(database.year > 2010)

@@ -1,7 +1,7 @@
-{% extends "base.html" %}
+{% extends "admin/master.html" %}
 {% block title%}Players{% endblock%}
 {% block style %}{{url_for("static", filename="styles/report.css")}}{% endblock%}
-{% block content%}
+{% block body%}
     <form action="#" method="POST">
         <div class="img_div">
             <input type="hidden" name="id" value="{{values[0]._id}}">
