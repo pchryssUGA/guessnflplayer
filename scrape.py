@@ -16,6 +16,9 @@ CX = os.getenv("GOOGLE_API_CX")
 WEBSITE = os.getenv("WEBSITE")
 
 nameSet = set()
+teams = {"nyj": "New York Jets",
+         "cin": "Cincinatti Bengals",
+         "nyg": "New York Giants"}
 
 
 #Represents a player object
@@ -34,7 +37,6 @@ def scrape(database):
             startDate = request.form["sd"]
             endDate = request.form["ed"]
             run(database, team, startDate, endDate)
-            return render_template("scrape.html")
         #Used for a dummy scrape (testing purposes)
         elif request.form["scrape_type"] == "dummy":
             zach = database("Zach Wilson", "nyj", 2021, "https://i2-prod.mirror.co.uk/incoming/article29751424.ece/ALTERNATES/n615/0_GettyImages-1345565987.jpg", "hi", 0, 0, 0)
@@ -53,7 +55,9 @@ def scrape(database):
 
 #Function that runs the scraper
 def run(database, tm, startDate, endDate):
+    team = teams.get(tm)
     playerArray = []
+    
     #Iterates through the scrape for every year requested. Uses the pandas library to locate a table populated with player names
     for i in range(int(endDate), int(startDate), -1):
         year = str(i)
@@ -63,11 +67,11 @@ def run(database, tm, startDate, endDate):
         table = df[0]
         player_names = table['Player']
         #Iterates through every player name found in the table
-        # First calls the Google Images API to generate an image url for the player
-        # Then checks for duplicates (the website used uses * and + to denote pro bowl / all pro honors. In order to avoid 'Tom Brady' and 'Tom Brady+' from both being added,
-        # the names are trimmed and then checked)
+        #First calls the Google Images API to generate an image url for the player
+        #Then checks for duplicates (the website used uses * and + to denote pro bowl / all pro honors. In order to avoid 'Tom Brady' and 'Tom Brady+' from both being added,
+        #the names are trimmed and then checked)
         for player in player_names:
-            query = "nfl " + player + " playing for " + tm + " clear image by himself"
+            query = "static clubs nfl " + player + " playing for " + team + " clear image by himself "
             response = requests.get(API+"cx="+CX+"&num=1&q="+query+"&searchType=image&access_token="+KEY+"&key="+KEY)
             image = response.json()
             imageItems = image['items'][0]
@@ -87,7 +91,11 @@ def run(database, tm, startDate, endDate):
     #Sorts the array by year and then iterates through each name, adding them to the database
     playerArray = sorted(playerArray, key=lambda x: x.year)
     for player in playerArray:
-        newPlayer = database(player.name, tm, year, player.url, "",  0, 0, 0)
+        name = player.name.replace(" ", "_")
+        f = open("static/images/"+tm+"/"+year+"/"+name+".jpg", "wb")
+        f.write(requests.get(player.url).content)
+        f.close()
+        newPlayer = database(player.name, tm, year, "static/images/"+tm+"/"+year+"/"+name+".jpg", "",  0, 0, 0)
         db.session.add(newPlayer)
     db.session.commit()
     

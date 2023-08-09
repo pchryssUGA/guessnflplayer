@@ -80,4 +80,5 @@ def result(name):
         db.session.commit()
         return render_template("result.html", values=["Correct :)", dbPlayer, fromYear, toYear])
     else:
+        print(dbPlayer.url)
         return render_template("result.html", values=["Incorrect :(", dbPlayer, fromYear, toYear])
