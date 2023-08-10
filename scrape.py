@@ -17,8 +17,9 @@ WEBSITE = os.getenv("WEBSITE")
 
 nameSet = set()
 teams = {"nyj": "New York Jets",
-         "cin": "Cincinatti Bengals",
-         "nyg": "New York Giants"}
+         "nwe": "New England Patriots",
+         "mia": "Miami Dolphins",
+         "buf": "Buffalo Bills"}
 
 
 #Represents a player object
@@ -92,11 +93,10 @@ def run(database, tm, startDate, endDate):
     playerArray = sorted(playerArray, key=lambda x: x.year)
     for player in playerArray:
         name = player.name.replace(" ", "_")
-        f = open("static/images/"+tm+"/"+year+"/"+name+".jpg", "wb")
+        f = open("static/images/"+tm+"/"+player.year+"/"+name+".jpg", "wb")
         f.write(requests.get(player.url).content)
         f.close()
-        print(player.url)
-        newPlayer = database(player.name, tm, year, "static/images/"+tm+"/"+year+"/"+name+".jpg", "",  0, 0, 0)
+        newPlayer = database(player.name, tm, player.year, "static/images/"+tm+"/"+player.year+"/"+name+".jpg", "",  0, 0, 0)
         db.session.add(newPlayer)
     db.session.commit()
     
