@@ -69,16 +69,15 @@ def gen():
         return render_template("gen.html", value="blank")
     
 #Displays the result of the user's guess
-@gen_blueprint.route("/result/<name>", methods=["POST", "GET"])
-def result(name):
-    dbPlayer = player_database.query.filter_by(name=name).first()
+@gen_blueprint.route("/result/<id>", methods=["POST", "GET"])
+def result(id):
+    dbPlayer = player_database.query.filter_by(_id=id).first()
     fromYear = request.form["from_range"]
     toYear = request.form["to_range"]
     guess = request.form["guess"]
-    if guess == name:
+    if guess == dbPlayer.name:
         dbPlayer.numC = dbPlayer.numC + 1
         db.session.commit()
         return render_template("result.html", values=["Correct :)", dbPlayer, fromYear, toYear])
     else:
-        print(dbPlayer.url)
         return render_template("result.html", values=["Incorrect :(", dbPlayer, fromYear, toYear])

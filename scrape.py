@@ -19,7 +19,9 @@ nameSet = set()
 teams = {"nyj": "New York Jets",
          "nwe": "New England Patriots",
          "mia": "Miami Dolphins",
-         "buf": "Buffalo Bills"}
+         "buf": "Buffalo Bills",
+         "sea": "Seattle Seahawks",
+         "atl": "Atlanta Falcons"}
 
 
 #Represents a player object
@@ -72,8 +74,8 @@ def run(database, tm, startDate, endDate):
         #Then checks for duplicates (the website used uses * and + to denote pro bowl / all pro honors. In order to avoid 'Tom Brady' and 'Tom Brady+' from both being added,
         #the names are trimmed and then checked)
         for player in player_names:
-            query = year + " static clubs nfl " + player + " on " + team + "in game"
-            response = requests.get(API+"cx="+CX+"&num=1&q="+query+"&searchType=image&access_token="+KEY+"&key="+KEY)
+            query = "NFL " + player + " playing for " + team + " in game " + year
+            response = requests.get(API+"cx="+CX+"&num=1&q="+query+"&searchType=image&access_token="+KEY+"&key="+KEY+"&fileType=JPEG")
             image = response.json()
             imageItems = image['items'][0]
             imageLink = imageItems['link']
@@ -96,6 +98,8 @@ def run(database, tm, startDate, endDate):
         f = open("static/images/"+tm+"/"+player.year+"/"+name+".jpg", "wb")
         f.write(requests.get(player.url).content)
         f.close()
+        print(name)
+        print(player.url)
         newPlayer = database(player.name, tm, player.year, "static/images/"+tm+"/"+player.year+"/"+name+".jpg", "",  0, 0, 0)
         db.session.add(newPlayer)
     db.session.commit()

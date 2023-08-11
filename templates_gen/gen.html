@@ -10,7 +10,7 @@
             <img id="image" src="/{{values[0].url}}">
         </div>
         <div class="guess_div">
-            <form action = "result/{{values[0].name}}" method="post">
+            <form action = "result/{{values[0]._id}}" method="post">
                 <input type="hidden" name="pick_team" value="{{values[0].team}}">
                 <input type="hidden" name="from_range" value="{{values[1]}}">
                 <input type="hidden" name="to_range" value="{{values[2]}}">
