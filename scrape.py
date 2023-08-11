@@ -72,7 +72,7 @@ def run(database, tm, startDate, endDate):
         #Then checks for duplicates (the website used uses * and + to denote pro bowl / all pro honors. In order to avoid 'Tom Brady' and 'Tom Brady+' from both being added,
         #the names are trimmed and then checked)
         for player in player_names:
-            query = year + " nfl " + player + " on " + team + "in game"
+            query = year + " static clubs nfl " + player + " on " + team + "in game"
             response = requests.get(API+"cx="+CX+"&num=1&q="+query+"&searchType=image&access_token="+KEY+"&key="+KEY)
             image = response.json()
             imageItems = image['items'][0]
