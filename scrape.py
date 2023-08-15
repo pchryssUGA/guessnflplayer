@@ -1,7 +1,6 @@
 from flask import Flask, Blueprint, render_template, request, redirect, url_for
 from db import db
 from flask_sqlalchemy import SQLAlchemy
-from bs4 import BeautifulSoup
 import pandas as pd
 import requests
 import json
