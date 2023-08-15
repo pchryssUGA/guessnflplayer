@@ -6,4 +6,3 @@ flask_login
 flask_migrate
 datetime
 pandas
-json
