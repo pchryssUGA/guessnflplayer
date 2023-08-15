@@ -13,11 +13,8 @@ from flask_login import UserMixin, LoginManager, current_user, login_user, logou
 from flask_admin.contrib.sqla import ModelView
 from datetime import timedelta
 
-load_dotenv()
-static_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), "app", "static")
-template_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), "app", "templates")
 
-app = Flask('__main__', static_folder=static_folder, template_folder=template_folder)
+app = Flask('__main__', static_folder='/app/static', template_folder='/app/templates')
 app.register_blueprint(gen_blueprint, url_prefix='/gen')
 app.permanent_session_lifetime = timedelta(hours=1)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'
