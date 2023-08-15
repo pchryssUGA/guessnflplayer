@@ -1,0 +1,44 @@
+
+.img_div {
+    display: flex;
+    justify-content: center;
+}
+
+.desc_div {
+    display: flex;
+    justify-content: center;
+}
+
+.description {
+    width: 500px;
+}
+
+#image {
+    height: 300px;
+    width: 500px;
+    border: 5px solid black;
+    border-radius: 15px;
+    margin-bottom: 15px;
+}
+
+.guess_div {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.generate_div {
+    display: flex;
+    justify-content: center;
+    margin: 4px;
+}
+
+#submit_button {
+    margin: 10px;
+}
+
+.report_div{
+    display: flex;
+    justify-content: center;
+}

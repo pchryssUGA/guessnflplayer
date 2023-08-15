@@ -1,0 +1,54 @@
+body {
+    font-family: 'Oswald', sans-serif;
+    background-color: #EAEAEA;
+}
+
+
+
+.title {
+    text-align: center;
+    padding: 10px;
+}
+
+.main_div {
+ 
+}
+
+.yearRange {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.dropdown_div {
+    display: flex;
+    justify-content: center;
+}
+
+
+.logo_div {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 2fr));
+    grid-row-gap: 30px;
+    grid-column-gap: 50px;
+
+}
+
+    .afc_east, .afc_west, .afc_north, .afc_south, 
+    .nfc_east, .nfc_west, .nfc_north, .nfc_south {
+        text-align: center;
+    }
+
+        .division_teams {
+            display: flex;
+        }
+
+            .logo_button {
+                border: none;
+            }
+
+            .logo_image {
+                height: 50px;
+                width: auto;
+            }
+
+
