@@ -39,7 +39,7 @@ admin.add_view(ReportView(name='Report', endpoint='report'))
 #Home page
 @app.route('/', methods=['POST', 'GET'] )
 def home():
-    return render_template('index.html')
+    return render_template('templates/index.html')
 
 #Login page
 @app.route('/login', methods={'POST', 'GET'})
@@ -54,7 +54,7 @@ def login():
             session.permanent = True
             session['admin'] = 'true'
             return redirect(url_for('home'))
-    return render_template('login.html')
+    return render_template('/login.html')
 
 #Logout page
 @app.route('/logout')
