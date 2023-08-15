@@ -14,7 +14,7 @@ from flask_admin.contrib.sqla import ModelView
 from datetime import timedelta
 
 load_dotenv()
-app = Flask("__main__", template_folder="template")
+app = Flask("__main__", template_folder="templates")
 app.register_blueprint(gen_blueprint, url_prefix="/gen")
 app.permanent_session_lifetime = timedelta(hours=1)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///posts.db"
