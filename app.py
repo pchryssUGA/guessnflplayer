@@ -39,7 +39,7 @@ admin.add_view(ReportView(name="Report", endpoint="report"))
 #Home page
 @app.route("/", methods=["POST", "GET"] )
 def home():
-    return render_template("index.html")
+    return "Hello, World!" #render_template("index.html")
 
 #Login page
 @app.route("/login", methods={"POST", "GET"})
