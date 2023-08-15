@@ -1,5 +1,5 @@
 gunicorn==19.7.1
-python-dotenv==1.0.0
+python-dotenv==0.21.1
 requests
 flask_sqlalchemy
 flask_admin
