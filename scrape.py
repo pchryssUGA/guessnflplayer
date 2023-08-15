@@ -98,8 +98,6 @@ def run(database, tm, startDate, endDate):
         f = open("static/images/"+tm+"/"+player.year+"/"+name+".jpg", "wb")
         f.write(requests.get(player.url).content)
         f.close()
-        print(name)
-        print(player.url)
         newPlayer = database(player.name, tm, player.year, "static/images/"+tm+"/"+player.year+"/"+name+".jpg", "",  0, 0, 0)
         db.session.add(newPlayer)
     db.session.commit()

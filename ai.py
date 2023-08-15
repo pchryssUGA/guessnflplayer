@@ -3,13 +3,14 @@ import os
 from db import db
 from flask import request
 
-teams = {"nyj": "New York Jets"}
+teams = {"nyj": "New York Jets",
+         "buf": "Buffalo Bills"}
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 #Adds AI generated descriptions to each player that does not already have a description
 def ai(database):
     if request.method == "POST":
-        players = database.query.filter_by(team="nyj").filter(database.year > 2010).filter(desc="")
+        players = database.query.filter_by(team="buf").filter(database.year > 2010)
         for player in players:
             name = player.name
             team = teams.get(player.team)
