@@ -5,7 +5,6 @@ flask_admin
 flask_login
 flask_migrate
 datetime
-dotenv
 os
 random
 pandas
