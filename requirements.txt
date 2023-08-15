@@ -1,2 +1,12 @@
 gunicorn==19.7.1
 requests
+flask_sqlalchemy
+flask_admin
+flask_login
+flask_migrate
+datetime
+dotenv
+os
+random
+pandas
+json
