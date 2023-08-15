@@ -8,10 +8,10 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-gen_blueprint = Blueprint("gen", __name__, static_folder="static", template_folder="templates_gen")
-API = "https://customsearch.googleapis.com/customsearch/v1?"
-KEY = os.getenv("GOOGLE_API_KEY")
-CX = os.getenv("GOOGLE_API_CX")
+gen_blueprint = Blueprint('gen', __name__, static_folder='static', template_folder='templates_gen')
+API = 'https://customsearch.googleapis.com/customsearch/v1?'
+KEY = os.getenv('GOOGLE_API_KEY')
+CX = os.getenv('GOOGLE_API_CX')
 
 #This function is used to notify me when a player has been reported 3 times. 
 # It first access the Google Images API and querys 4 potential replacement images, storing them in variables.
@@ -19,34 +19,34 @@ CX = os.getenv("GOOGLE_API_CX")
 # This API gateway in turn triggers the lambda which utilizes AWS SES services to send me an email with the
 #  reported player name, id, and images formatted with proper HTML
 def call_lambda(reportedID):
-    api = "https://qv0ge6dcdl.execute-api.us-east-2.amazonaws.com/test/send?"
+    api = 'https://qv0ge6dcdl.execute-api.us-east-2.amazonaws.com/test/send?'
     id = str(reportedID)
     fixPlayer = player_database.query.filter_by(_id=int(id)).first()
     name = fixPlayer.name
-    query = "nfl " + fixPlayer.name + " playing for " + fixPlayer.team + " clear image by himself"
-    response = requests.get(API+"cx="+CX+"&num=4&q="+query+"&searchType=image&access_token="+KEY+"&key="+KEY)
+    query = 'nfl ' + fixPlayer.name + ' playing for ' + fixPlayer.team + ' clear image by himself'
+    response = requests.get(API+'cx='+CX+'&num=4&q='+query+'&searchType=image&access_token='+KEY+'&key='+KEY)
     json = response.json()
-    imageOne = json["items"][0]["link"]
-    imageTwo = json["items"][1]["link"]
-    imageThree = json["items"][2]["link"]
-    imageFour = json["items"][3]["link"]
+    imageOne = json['items'][0]['link']
+    imageTwo = json['items'][1]['link']
+    imageThree = json['items'][2]['link']
+    imageFour = json['items'][3]['link']
     
-    response = requests.get(api + "playerID=" + id + "&playerName=" + name + "&imageOne=" + imageOne + "&imageTwo=" + imageTwo + "&imageThree=" + imageThree + "&imageFour=" + imageFour)
+    response = requests.get(api + 'playerID=' + id + '&playerName=' + name + '&imageOne=' + imageOne + '&imageTwo=' + imageTwo + '&imageThree=' + imageThree + '&imageFour=' + imageFour)
     returned = response.json()
     print(returned)
 
 #Generate a new player
-@gen_blueprint.route("/", methods=["POST", "GET"])
+@gen_blueprint.route('/', methods=['POST', 'GET'])
 def gen():
     #Gen is only generated from a POST request, code should never get passed the if/else statement
-    if request.method == "POST":
-        fromVal = request.form["from_range"]
-        toVal = request.form["to_range"]
-        pickTeam = request.form["pick_team"]
+    if request.method == 'POST':
+        fromVal = request.form['from_range']
+        toVal = request.form['to_range']
+        pickTeam = request.form['pick_team']
         #If the user is wishing to report a player, it will add a report to the players numR variable, and check if the player has 3 reports
         # If the player has 3 report, it will call the call_lambda function
-        if (request.form["submit"] == "Report This Player"):
-            playerID = int(request.form["pick_id"])
+        if (request.form['submit'] == 'Report This Player'):
+            playerID = int(request.form['pick_id'])
             reportPlayer = player_database.query.filter_by(_id=playerID).first()
             reportPlayer.numR = reportPlayer.numR + 1
             db.session.commit()
@@ -62,22 +62,22 @@ def gen():
             currPlayer = player_database.query.filter_by(team=pickTeam).filter(player_database.year >= fromVal).filter(player_database.year <= toVal).filter_by(_id=num).first()
             currPlayer.numG = currPlayer.numG + 1
             db.session.commit()
-            return render_template("gen.html", values=[currPlayer, fromVal, toVal]) 
+            return render_template('gen.html', values=[currPlayer, fromVal, toVal]) 
         else:
-            return render_template("gen.html", value="blank")     
+            return render_template('gen.html', value='blank')     
     else:
-        return render_template("gen.html", value="blank")
+        return render_template('gen.html', value='blank')
     
 #Displays the result of the user's guess
-@gen_blueprint.route("/result/<id>", methods=["POST", "GET"])
+@gen_blueprint.route('/result/<id>', methods=['POST', 'GET'])
 def result(id):
     dbPlayer = player_database.query.filter_by(_id=id).first()
-    fromYear = request.form["from_range"]
-    toYear = request.form["to_range"]
-    guess = request.form["guess"]
+    fromYear = request.form['from_range']
+    toYear = request.form['to_range']
+    guess = request.form['guess']
     if guess == dbPlayer.name:
         dbPlayer.numC = dbPlayer.numC + 1
         db.session.commit()
-        return render_template("result.html", values=["Correct :)", dbPlayer, fromYear, toYear])
+        return render_template('result.html', values=['Correct :)', dbPlayer, fromYear, toYear])
     else:
-        return render_template("result.html", values=["Incorrect :(", dbPlayer, fromYear, toYear])
+        return render_template('result.html', values=['Incorrect :(', dbPlayer, fromYear, toYear])

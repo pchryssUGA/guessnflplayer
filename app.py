@@ -14,12 +14,12 @@ from flask_admin.contrib.sqla import ModelView
 from datetime import timedelta
 
 load_dotenv()
-app = Flask("__main__", template_folder="templates")
-app.register_blueprint(gen_blueprint, url_prefix="/gen")
+app = Flask('__main__', template_folder='templates')
+app.register_blueprint(gen_blueprint, url_prefix='/gen')
 app.permanent_session_lifetime = timedelta(hours=1)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///posts.db"
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 db.init_app(app) 
 migrate = Migrate(app, db)
 login = LoginManager(app)
@@ -32,35 +32,35 @@ def load_user(user_id):
 admin = Admin(app, index_view=MyAdminIndexView())
 admin.add_view(MyModelView(AdminUser, db.session))
 admin.add_view(MyModelView(player_database, db.session))
-admin.add_view(ScrapeView(name="Scrape", endpoint="scrape"))
-admin.add_view(AiView(name="AI", endpoint="ai"))
-admin.add_view(ReportView(name="Report", endpoint="report"))
+admin.add_view(ScrapeView(name='Scrape', endpoint='scrape'))
+admin.add_view(AiView(name='AI', endpoint='ai'))
+admin.add_view(ReportView(name='Report', endpoint='report'))
 
 #Home page
-@app.route("/", methods=["POST", "GET"] )
+@app.route('/', methods=['POST', 'GET'] )
 def home():
-    return "Hello, Elena!" #render_template("index.html")
+    return render_template('index.html')
 
 #Login page
-@app.route("/login", methods={"POST", "GET"})
+@app.route('/login', methods={'POST', 'GET'})
 def login():
-    if request.method == "POST":
-        print("hello")
+    if request.method == 'POST':
+        print('hello')
         admin = AdminUser.query.get(1)
-        username = request.form["username"]
-        password = request.form["password"]
-        question = request.form["question"]
+        username = request.form['username']
+        password = request.form['password']
+        question = request.form['question']
         if username == admin.username and password == admin.password and question == admin.question:
             session.permanent = True
-            session["admin"] = "true"
-            return redirect(url_for("home"))
-    return render_template("login.html")
+            session['admin'] = 'true'
+            return redirect(url_for('home'))
+    return render_template('login.html')
 
 #Logout page
-@app.route("/logout")
+@app.route('/logout')
 def logout():
-    session.pop("admin", None)
-    return "Logged Out"
+    session.pop('admin', None)
+    return 'Logged Out'
     
 if __name__ == '__main__':
     with app.app_context():

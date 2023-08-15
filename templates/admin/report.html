@@ -1,20 +1,20 @@
-{% extends "admin/master.html" %}
+{% extends 'admin/master.html' %}
 {% block title%}Players{% endblock%}
 {% block head_css %}
     {{ super() }}
-    <link rel="stylesheet" href="{{url_for("static", filename="styles/report.css")}}">
+    <link rel='stylesheet' href='{{url_for('static', filename='styles/report.css')}}'>
 {% endblock%}
 {% block body%}
-        <form action="#" method="POST">
-            <input type="hidden" name="submit" value="Fix Image">
-            <p><input type="text" name="id" placeholder="Enter ID"/></p>
-            <p><input type="submit" value="Fix Image"/></p>
+        <form action='#' method='POST'>
+            <input type='hidden' name='submit' value='Fix Image'>
+            <p><input type='text' name='id' placeholder='Enter ID'/></p>
+            <p><input type='submit' value='Fix Image'/></p>
         </form> 
     {% for item in values%}
         <p>ID: {{item._id}}, Name: {{item.name}}, Reports: {{item.numR}}</p>
     {% endfor %}
-    <form action="#" method="POST">
-        <input type="hidden" name="submit" value="Clear Reports">
-        <p><input type="submit" value="Clear Reports"/></p>
+    <form action='#' method='POST'>
+        <input type='hidden' name='submit' value='Clear Reports'>
+        <p><input type='submit' value='Clear Reports'/></p>
     </form>
 {% endblock %}

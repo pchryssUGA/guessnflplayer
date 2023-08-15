@@ -1,11 +1,11 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% block title%}Players{% endblock%}
 {% block content%}
-        <form action="login" method="post">
-            <input type="hidden" name="submit" value="Fix Image">
-            <p>username  <input type="text" name="username" placeholder="Enter username"/></p>
-            <p>password  <input type="text" name="password" placeholder="Enter password"/></p>
-            <p>question  <input type="text" name="question" placeholder="Enter question"/></p>
-            <p><input type="submit" value="Login"/></p>
+        <form action='login' method='post'>
+            <input type='hidden' name='submit' value='Fix Image'>
+            <p>username  <input type='text' name='username' placeholder='Enter username'/></p>
+            <p>password  <input type='text' name='password' placeholder='Enter password'/></p>
+            <p>question  <input type='text' name='question' placeholder='Enter question'/></p>
+            <p><input type='submit' value='Login'/></p>
         </form> 
 {% endblock %}

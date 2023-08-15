@@ -1,108 +1,108 @@
 {
-    "configurations": [
+    'configurations': [
         {
-            "type": "aws-sam",
-            "request": "direct-invoke",
-            "name": "FixReportLambda:HelloWorldFunction (python3.10)",
-            "invokeTarget": {
-                "target": "template",
-                "templatePath": "${workspaceFolder}/FixReportLambda/template.yaml",
-                "logicalId": "HelloWorldFunction"
+            'type': 'aws-sam',
+            'request': 'direct-invoke',
+            'name': 'FixReportLambda:HelloWorldFunction (python3.10)',
+            'invokeTarget': {
+                'target': 'template',
+                'templatePath': '${workspaceFolder}/FixReportLambda/template.yaml',
+                'logicalId': 'HelloWorldFunction'
             },
-            "lambda": {
-                "payload": {},
-                "environmentVariables": {},
-                "runtime": "python3.10"
+            'lambda': {
+                'payload': {},
+                'environmentVariables': {},
+                'runtime': 'python3.10'
             }
         },
         {
-            "type": "aws-sam",
-            "request": "direct-invoke",
-            "name": "API FixReportLambda:HelloWorldFunction (python3.10)",
-            "invokeTarget": {
-                "target": "api",
-                "templatePath": "${workspaceFolder}/FixReportLambda/template.yaml",
-                "logicalId": "HelloWorldFunction"
+            'type': 'aws-sam',
+            'request': 'direct-invoke',
+            'name': 'API FixReportLambda:HelloWorldFunction (python3.10)',
+            'invokeTarget': {
+                'target': 'api',
+                'templatePath': '${workspaceFolder}/FixReportLambda/template.yaml',
+                'logicalId': 'HelloWorldFunction'
             },
-            "api": {
-                "path": "/hello",
-                "httpMethod": "get",
-                "payload": {
-                    "json": {}
+            'api': {
+                'path': '/hello',
+                'httpMethod': 'get',
+                'payload': {
+                    'json': {}
                 }
             },
-            "lambda": {
-                "runtime": "python3.10"
+            'lambda': {
+                'runtime': 'python3.10'
             }
         },
         {
-            "type": "aws-sam",
-            "request": "direct-invoke",
-            "name": "lambda-python3.10:HelloWorldFunction",
-            "invokeTarget": {
-                "target": "template",
-                "templatePath": "${workspaceFolder}/lambda-python3.10/template.yaml",
-                "logicalId": "HelloWorldFunction"
+            'type': 'aws-sam',
+            'request': 'direct-invoke',
+            'name': 'lambda-python3.10:HelloWorldFunction',
+            'invokeTarget': {
+                'target': 'template',
+                'templatePath': '${workspaceFolder}/lambda-python3.10/template.yaml',
+                'logicalId': 'HelloWorldFunction'
             },
-            "lambda": {
-                "payload": {},
-                "environmentVariables": {},
-                "runtime": "python3.10"
+            'lambda': {
+                'payload': {},
+                'environmentVariables': {},
+                'runtime': 'python3.10'
             }
         },
         {
-            "type": "aws-sam",
-            "request": "direct-invoke",
-            "name": "API lambda-python3.10:HelloWorldFunction",
-            "invokeTarget": {
-                "target": "api",
-                "templatePath": "${workspaceFolder}/lambda-python3.10/template.yaml",
-                "logicalId": "HelloWorldFunction"
+            'type': 'aws-sam',
+            'request': 'direct-invoke',
+            'name': 'API lambda-python3.10:HelloWorldFunction',
+            'invokeTarget': {
+                'target': 'api',
+                'templatePath': '${workspaceFolder}/lambda-python3.10/template.yaml',
+                'logicalId': 'HelloWorldFunction'
             },
-            "api": {
-                "path": "/hello",
-                "httpMethod": "get",
-                "payload": {
-                    "json": {}
+            'api': {
+                'path': '/hello',
+                'httpMethod': 'get',
+                'payload': {
+                    'json': {}
                 }
             },
-            "lambda": {
-                "runtime": "python3.10"
+            'lambda': {
+                'runtime': 'python3.10'
             }
         },
         {
-            "type": "aws-sam",
-            "request": "direct-invoke",
-            "name": "ReportEmail:HelloWorldFunction (python3.10)",
-            "invokeTarget": {
-                "target": "template",
-                "templatePath": "${workspaceFolder}/ReportEmail/template.yaml",
-                "logicalId": "HelloWorldFunction"
+            'type': 'aws-sam',
+            'request': 'direct-invoke',
+            'name': 'ReportEmail:HelloWorldFunction (python3.10)',
+            'invokeTarget': {
+                'target': 'template',
+                'templatePath': '${workspaceFolder}/ReportEmail/template.yaml',
+                'logicalId': 'HelloWorldFunction'
             },
-            "lambda": {
-                "payload": {},
-                "environmentVariables": {},
-                "runtime": "python3.10"
+            'lambda': {
+                'payload': {},
+                'environmentVariables': {},
+                'runtime': 'python3.10'
             }
         },
         {
-            "type": "aws-sam",
-            "request": "direct-invoke",
-            "name": "API ReportEmail:HelloWorldFunction (python3.10)",
-            "invokeTarget": {
-                "target": "api",
-                "templatePath": "${workspaceFolder}/ReportEmail/template.yaml",
-                "logicalId": "HelloWorldFunction"
+            'type': 'aws-sam',
+            'request': 'direct-invoke',
+            'name': 'API ReportEmail:HelloWorldFunction (python3.10)',
+            'invokeTarget': {
+                'target': 'api',
+                'templatePath': '${workspaceFolder}/ReportEmail/template.yaml',
+                'logicalId': 'HelloWorldFunction'
             },
-            "api": {
-                "path": "/hello",
-                "httpMethod": "get",
-                "payload": {
-                    "json": {}
+            'api': {
+                'path': '/hello',
+                'httpMethod': 'get',
+                'payload': {
+                    'json': {}
                 }
             },
-            "lambda": {
-                "runtime": "python3.10"
+            'lambda': {
+                'runtime': 'python3.10'
             }
         }
     ]
