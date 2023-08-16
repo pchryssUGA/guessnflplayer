@@ -36,6 +36,7 @@ class AdminUser(db.Model, UserMixin):
     username = db.Column(db.String(20))
     password = db.Column(db.String(20))
     question = db.Column((db.String(20)))
+    
 
 #View that displays all players
 class MyModelView(ModelView):

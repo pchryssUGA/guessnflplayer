@@ -22,6 +22,7 @@ def home():
 #Login page
 @app.route('/login', methods={'POST', 'GET'})
 def login():
+    
     if request.method == 'POST':
         print('hello')
         admin = AdminUser.query.get(1)
