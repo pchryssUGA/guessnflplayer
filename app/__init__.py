@@ -14,7 +14,7 @@ from flask_admin.contrib.sqla import ModelView
 from datetime import timedelta
 
 load_dotenv()
-app = Flask('__main__', static_folder='app/static', template_folder='app/templates')
+app = Flask('__main__', static_folder='/app/static', template_folder='/app/templates')
 app.register_blueprint(gen_blueprint, url_prefix='/gen')
 app.permanent_session_lifetime = timedelta(hours=1)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'
@@ -23,6 +23,7 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 db.init_app(app) 
 migrate = Migrate(app, db)
 login = LoginManager(app)
+
 
 @login.user_loader
 def load_user(user_id):
