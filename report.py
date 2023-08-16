@@ -1,5 +1,5 @@
 from flask import Flask, Blueprint, render_template, request, redirect, url_for
-from app.db import db
+from db import db
 from flask_sqlalchemy import SQLAlchemy
 import requests
 import os

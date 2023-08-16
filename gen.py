@@ -1,14 +1,14 @@
 from flask import Flask, Blueprint, render_template, request, redirect, url_for
-from app.db import db
+from db import db
 from flask_sqlalchemy import SQLAlchemy
-from app.models import player_database
+from models import player_database
 import random
 import requests
 import os
 from dotenv import load_dotenv
 load_dotenv()
 
-gen_blueprint = Blueprint('gen', __name__, static_folder='app/static', template_folder='app/templates')
+gen_blueprint = Blueprint('gen', __name__, static_folder='static', template_folder='templates_gen')
 API = 'https://customsearch.googleapis.com/customsearch/v1?'
 KEY = os.getenv('GOOGLE_API_KEY')
 CX = os.getenv('GOOGLE_API_CX')

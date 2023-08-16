@@ -1,11 +1,11 @@
-from app.db import db
+from db import db
 from flask_login import UserMixin, LoginManager, current_user
 from flask_admin.contrib.sqla import ModelView
 from flask import Flask, redirect, url_for, request, session
 from flask_admin import Admin, AdminIndexView, BaseView, expose
-from app.scrape import scrape
-from app.ai import ai
-from app.report import report, fix, get_player
+from scrape import scrape
+from ai import ai
+from report import report, fix, get_player
 
 #Database that stores the players
 class player_database(db.Model):
@@ -36,7 +36,6 @@ class AdminUser(db.Model, UserMixin):
     username = db.Column(db.String(20))
     password = db.Column(db.String(20))
     question = db.Column((db.String(20)))
-    
 
 #View that displays all players
 class MyModelView(ModelView):
@@ -96,3 +95,6 @@ class ReportView(BaseView):
         if 'admin' in session:
             return True
         return False
+
+    
+    

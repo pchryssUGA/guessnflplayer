@@ -1,5 +1,5 @@
 from flask import Flask, Blueprint, render_template, request, redirect, url_for
-from app.db import db
+from db import db
 from flask_sqlalchemy import SQLAlchemy
 import pandas as pd
 import requests
@@ -94,9 +94,14 @@ def run(database, tm, startDate, endDate):
     playerArray = sorted(playerArray, key=lambda x: x.year)
     for player in playerArray:
         name = player.name.replace(' ', '_')
-        f = open('app/static/images/'+tm+'/'+player.year+'/'+name+'.jpg', 'wb')
+        f = open('static/images/'+tm+'/'+player.year+'/'+name+'.jpg', 'wb')
         f.write(requests.get(player.url).content)
         f.close()
         newPlayer = database(player.name, tm, player.year, 'static/images/'+tm+'/'+player.year+'/'+name+'.jpg', '',  0, 0, 0)
         db.session.add(newPlayer)
     db.session.commit()
+    
+    
+    
+    
+

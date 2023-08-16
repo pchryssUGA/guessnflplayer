@@ -1,6 +1,6 @@
 import openai
 import os
-from app.db import db
+from db import db
 from flask import request
 
 teams = {'nyj': 'New York Jets',
