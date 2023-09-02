@@ -8,3 +8,5 @@ flask_migrate
 datetime
 pandas
 openai
+lxml==4.7.1
+

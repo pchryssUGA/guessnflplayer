@@ -9,6 +9,13 @@
     justify-content: center;
 }
 
+.warning_div {
+    margin-top: -5px;
+    font-size:10px;
+    display: flex;
+    justify-content: center;
+}
+
 .description {
     width: 500px;
 }
@@ -16,7 +23,7 @@
 #image {
     height: 300px;
     width: 500px;
-    border: 5px solid black;
+    border: 5px solid #013369;
     border-radius: 15px;
     margin-bottom: 15px;
 }
@@ -41,4 +48,44 @@
 .report_div{
     display: flex;
     justify-content: center;
+}
+
+.button {
+    background-color: #EAEAEA;
+    color: black;
+		      
+}
+
+@media only screen and (min-width: 980px) and (max-width: 981px) {
+    
+    #image {
+	height: 400px;
+	width: 600px;
+    }
+
+    .guess_div {
+	font-size: 30px;
+    }
+
+    .generate_div {
+	font-size: 30px;
+
+    }
+
+    .report_div {
+	font-size: 30px;
+    }
+
+    .desc_div {
+	font-size: 20px;
+    }
+
+    .warning_div {
+	font-size: 15px;
+    }
+
+    .button {
+	font-weight: 400;
+    }
+
 }

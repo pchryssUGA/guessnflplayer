@@ -5,7 +5,7 @@ from flask import Flask, redirect, url_for, request, session
 from flask_admin import Admin, AdminIndexView, BaseView, expose
 from scrape import scrape
 from ai import ai
-from report import report, fix, get_player
+from report import reset_reports, reset_numC, reset_numG, fix, get_player
 
 #Database that stores the players
 class player_database(db.Model):
@@ -31,11 +31,16 @@ class player_database(db.Model):
         self.numR = numR
 
 #Database that stores the admin information
-class AdminUser(db.Model, UserMixin):
+class admin_user(db.Model, UserMixin):
     id = db.Column('id', db.Integer, primary_key=True)
     username = db.Column(db.String(20))
     password = db.Column(db.String(20))
     question = db.Column((db.String(20)))
+
+    def __init__(self, username, password, question):
+        self.username = username
+        self.password = password
+        self.question = question
 
 #View that displays all players
 class MyModelView(ModelView):
@@ -83,12 +88,19 @@ class ReportView(BaseView):
     def index(self):            
         if request.method == 'POST':
             if request.form['submit'] == 'Fix Image':
-                data = get_player(player_database)
+                data = get_player(player_database, False)
+                return self.render('admin/fix.html', values=[data[0], data[1]])
+            elif request.form['submit'] == 'Better images':
+                data = get_player(player_database, True)
                 return self.render('admin/fix.html', values=[data[0], data[1]])
             elif request.form['submit'] == 'Pick this image':
                 fix(player_database)
             elif request.form['submit'] == 'Clear Reports':
-                report(player_database)
+                reset_reports(player_database)
+            elif request.form['submit'] == 'Clear numC':
+                reset_numC(player_database)
+            elif request.form['submit'] == 'Clear numG':
+                reset_numG(player_database)
         return self.render('admin/report.html', values=player_database.query.order_by(player_database.numR.desc(), player_database._id).all())
     
     def is_accessible(self):

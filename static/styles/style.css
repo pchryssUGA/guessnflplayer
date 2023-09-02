@@ -1,8 +1,25 @@
 body {
     font-family: 'Oswald', sans-serif;
     background-color: #EAEAEA;
+    color: #013369;
 }
 
+.navbar {
+    background-color: #013369!important;
+}
+.navbar-brand {
+    color: #EAEAEA!important;
+}
+
+.navbar-toggler {
+    color: #EAEAEA!important;
+    border-color: #EAEAEA!important;
+    border-width: 2px;
+}
+
+.nav-link {
+    color: #EAEAEA!important;
+}
 
 
 .title {
@@ -11,7 +28,8 @@ body {
 }
 
 .main_div {
- 
+    display: grid;
+    place-items: center;
 }
 
 .yearRange {
@@ -26,29 +44,92 @@ body {
 
 
 .logo_div {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 2fr));
-    grid-row-gap: 30px;
-    grid-column-gap: 50px;
-
+    display: flex;
+    flex-wrap: wrap;
+    width: 344px;
 }
 
-    .afc_east, .afc_west, .afc_north, .afc_south, 
-    .nfc_east, .nfc_west, .nfc_north, .nfc_south {
-        text-align: center;
+
+.afc_east, .afc_west, .afc_north, .afc_south, 
+.nfc_east, .nfc_west, .nfc_north, .nfc_south {
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.division_teams {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo_button {
+    background-color: #ffffff;
+    border-color: #d50a0a;
+    border-radius: 5px;
+    border-size: .5px;
+    margin: .5px;
+}
+
+.logo_image {
+    width: auto;
+    height: 46px;
+}
+
+.report_subject {
+    height: 60px;
+    width: 300px;
+    margin-top: -8px;
+    margin-bottom: 5px;
+}
+
+.report_message {
+    height: 100px;
+    width: 300px;
+    margin-top: -8px;
+    margin-bottom: 5px;
+	   
+}
+
+@media only screen and (min-width: 980px) and (max-width: 981px){
+
+    .logo_div {
+	width: 540px;
+    }
+    
+    .logo_image {
+        width: auto;
+        height: 70px;
     }
 
-        .division_teams {
-            display: flex;
-        }
+    .title {
+	font-size: 30px;
+    }
 
-            .logo_button {
-                border: none;
-            }
+    .dropdown_div {
+	font-size: 30px;
+    }
 
-            .logo_image {
-                height: 50px;
-                width: auto;
-            }
+    
+    .navbar {
+	background-color: #013369!important;
 
+    }
+    .navbar-brand {
+	color: #EAEAEA!important;
+	font-size: 40px;
+    }
+    .navbar-toggler {
+	color: #EAEAEA!important;
+	border-color: #EAEAEA!important;
+	border-width: 2px;
+	font-size: 30px;
+    }
+    .nav-link {
+	color: #EAEAEA!important;
+	font-size: 30px;
 
+    }
+    
+}
+
+    

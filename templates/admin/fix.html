@@ -4,37 +4,28 @@
     {{ super() }}
     <link rel='stylesheet' href='{{url_for('static', filename='styles/report.css')}}'>
 {% endblock%}
-{% block body%}
+    {% block body%}
     <form action='#' method='POST'>
-        <div class='img_div'>
-            <input type='hidden' name='id' value='{{values[0]._id}}'>
-            <input type='hidden' name='url' value='{{values[1][0]}}'>
-            <img id='image' src={{values[1][0]}}>
-            <p><input class='button' type='submit' value='Pick this image' name='submit'/></p>
-        </div>
+      <div class='img_div'>
+        <input type='hidden' name='id' value='{{values[0]._id}}'>
+        <input type='hidden' name='url' value='{{values[0].url}}'>
+        <img id='image' src={{values[0].url}}>
+        <p><input class='button' type='submit' value='Pick this image' name='submit'/></p>
+      </div>
     </form>
+    <h6>--------------------------------------------------------------------------</h6>
+    {% for i in range(values[1]|length)%}
     <form action='#' method='POST'>
-        <div class='img_div'>
-            <input type='hidden' name='id' value='{{values[0]._id}}'>
-            <input type='hidden' name='url' value='{{values[1][1]}}'>
-            <img id='image' src={{values[1][1]}}>
-            <p><input class='button' type='submit' value='Pick this image' name='submit'/></p>
-        </div>
+      <div class='img_div'>
+	<input type='hidden' name='id' value='{{values[0]._id}}'>
+	<input type='hidden' name='url' value='{{values[1][i]}}'>
+	<img id='image' src={{values[1][i]}}>
+	<p><input class='button' type='submit' value='Pick this image' name='submit'/></p>
+      </div>
     </form>
+    {% endfor %}
     <form action='#' method='POST'>
-        <div class='img_div'>
-            <input type='hidden' name='id' value='{{values[0]._id}}'>
-            <input type='hidden' name='url' value='{{values[1][2]}}'>
-            <img id='image' src={{values[1][2]}}>
-            <p><input class='button' type='submit' value='Pick this image' name='submit'/></p>
-        </div>
+      <p><input type='hidden' name='id' value='{{values[0]._id}}'/></p>
+      <p><input class='button' type='submit' value='Better images' name='submit'/></p>
     </form>
-    <form action='#' method='POST'>
-        <div class='img_div'>
-            <input type='hidden' name='id' value='{{values[0]._id}}'>
-            <input type='hidden' name='url' value='{{values[1][3]}}'>
-            <img id='image' src={{values[1][3]}}>
-            <p><input class='button' type='submit' value='Pick this image' name='submit'/></p>
-        </div>
-    </form>
-{% endblock %}
+    {% endblock %}

@@ -8,7 +8,41 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-gen_blueprint = Blueprint('gen', __name__, static_folder='static', template_folder='templates_gen')
+team_colors = {'crd': '#97233F',
+               'atl': '#a71930',
+               'rav': '#241773',
+               'buf': '#00338D',
+               'car': '#0085CA',
+               'chi': '#C83803',
+               'cin': '#FB4F14',
+               'cle': '#FF3C00',
+               'dal': '#041E42',
+               'den': '#FB4F14',
+               'det': '#0076B6',
+               'gnb': '#203731',
+               'htx': '#03202F',
+               'clt': '#002C5F',
+               'jax': '#006778',
+               'kan': '#E31837',
+               'rai': '#000000',
+               'sdg': '#0080C6',
+               'ram': '#003594',
+               'mia': '#008E97',
+               'min': '#4F2683',
+               'nwe': '#002244',
+               'nor': '#D3BC8D',
+               'nyj': '#125740',
+               'nyg': '#0B2265',
+               'phi': '#004C54',
+               'pit': '#101820',
+               'sfo': '#AA0000',
+               'sea': '#002244',
+               'tam': '#D50A0A',
+               'oti': '#4B92DB',
+               'was': '#5A1414'}
+
+
+gen_blueprint = Blueprint('gen', __name__, static_folder='/home/pchryss/RandomPlayer/static', template_folder='/home/pchryss/RandomPlayer/templates_gen')
 API = 'https://customsearch.googleapis.com/customsearch/v1?'
 KEY = os.getenv('GOOGLE_API_KEY')
 CX = os.getenv('GOOGLE_API_CX')
@@ -45,13 +79,13 @@ def gen():
         pickTeam = request.form['pick_team']
         #If the user is wishing to report a player, it will add a report to the players numR variable, and check if the player has 3 reports
         # If the player has 3 report, it will call the call_lambda function
-        if (request.form['submit'] == 'Report This Player'):
+        if (request.form['submit'] == 'Report a Bad Image'):
             playerID = int(request.form['pick_id'])
             reportPlayer = player_database.query.filter_by(_id=playerID).first()
             reportPlayer.numR = reportPlayer.numR + 1
             db.session.commit()
-            if reportPlayer.numR == 3:
-                call_lambda(reportPlayer._id)
+#            if reportPlayer.numR == 3:
+#                call_lambda(reportPlayer._id)
         #If length is none, there are no players for the selected year range. This helps exclude edge cases such as fromYear being greater than toYear
         length = player_database.query.filter_by(team=pickTeam).filter(player_database.year >= fromVal).filter(player_database.year <= toVal).order_by(player_database._id.desc()).first()
         if length is not None:
@@ -62,7 +96,9 @@ def gen():
             currPlayer = player_database.query.filter_by(team=pickTeam).filter(player_database.year >= fromVal).filter(player_database.year <= toVal).filter_by(_id=num).first()
             currPlayer.numG = currPlayer.numG + 1
             db.session.commit()
-            return render_template('gen.html', values=[currPlayer, fromVal, toVal]) 
+            team = currPlayer.team
+            color = team_colors.get(team)
+            return render_template('gen.html', values=[currPlayer, fromVal, toVal, color]) 
         else:
             return render_template('gen.html', value='blank')     
     else:
@@ -75,9 +111,10 @@ def result(id):
     fromYear = request.form['from_range']
     toYear = request.form['to_range']
     guess = request.form['guess']
-    if guess == dbPlayer.name:
+    color = team_colors.get(dbPlayer.team)
+    if guess.lower() == dbPlayer.name.lower():
         dbPlayer.numC = dbPlayer.numC + 1
         db.session.commit()
-        return render_template('result.html', values=['Correct :)', dbPlayer, fromYear, toYear])
+        return render_template('result.html', values=['Correct :)', dbPlayer, fromYear, toYear, color])
     else:
-        return render_template('result.html', values=['Incorrect :(', dbPlayer, fromYear, toYear])
+        return render_template('result.html', values=['Incorrect :(', dbPlayer, fromYear, toYear, color])
