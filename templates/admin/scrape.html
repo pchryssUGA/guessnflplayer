@@ -5,11 +5,11 @@
     <link rel='stylesheet' href='{{url_for('static', filename='styles/style.css')}}'>
 {% endblock%}
 {% block body %}
-<form action='#' method='post'>
-    <input type='hidden' name='scrape_type' value='real'>
-    <p>Team<input type='text' name='tm' placeholder='Enter Team'/></p>
-    <p>Start Year<input type='text' name='sd' placeholder='Enter Start Year'/></p>
-    <p>End Year<input type='text' name='ed' placeholder='Enter End Year'/></p>
-    <p><input type='submit' value='submit'/></p>
-</form>
+    <form action='#' method='post'>
+        <input type='hidden' name='scrape_type' value='real'>
+        <p>Team<input type='text' name='tm' placeholder='Enter Team'/></p>
+        <p>Start Year<input type='text' name='sd' placeholder='Enter Start Year'/></p>
+        <p>End Year<input type='text' name='ed' placeholder='Enter End Year'/></p>
+        <p><input type='submit' value='submit'/></p>
+    </form>
 {% endblock %}

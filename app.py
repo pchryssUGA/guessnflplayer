@@ -16,6 +16,9 @@ from datetime import timedelta
 
 project_folder = os.path.expanduser('/home/pchryss/RandomPlayer')
 load_dotenv(os.path.join(project_folder, '.env'))
+AWS_API_WEBSITE=os.getenv('AWS_API_WEBSITE')
+
+#Initilize app settings
 app = Flask('__main__', static_folder='/home/pchryss/RandomPlayer/static', template_folder='/home/pchryss/RandomPlayer/templates')
 app.register_blueprint(gen_blueprint, url_prefix='/gen')
 app.permanent_session_lifetime = timedelta(hours=1)
@@ -26,13 +29,13 @@ app.secret_key = "a"
 db.init_app(app) 
 migrate = Migrate(app, db)
 login = LoginManager(app)
-AWS_API_WEBSITE=os.getenv('AWS_API_WEBSITE')
 
+#Function that logs a user in
 @login.user_loader
 def load_user(user_id):
     return admin_user.query.get(user_id)
 
-#Creates admin views
+#Creates views for admin panel
 admin = Admin(app, index_view=MyAdminIndexView())
 admin.add_view(MyModelView(admin_user, db.session))
 admin.add_view(MyModelView(player_database, db.session))
@@ -64,11 +67,6 @@ def login():
 def logout():
     session.pop('admin', None)
     return 'Logged Out'
-    
-if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
-    app.run(debug=True)
 
 #Report Bug page
 @app.route('/bug', methods={'POST', 'GET'})
@@ -79,6 +77,13 @@ def bug():
         call_lambda(subject, message)
     return render_template('bug.html')
 
+#Function used when a user reports a bug
+#Triggers an AWS Lambda containing an AWS SES call
 def call_lambda(subject, message):
     api = AWS_API_WEBSITE
     response = requests.get(api + 'subject=' + subject + '&message=' + message)
+
+if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()
+    app.run(debug=True)

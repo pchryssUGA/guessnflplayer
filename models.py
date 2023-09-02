@@ -7,7 +7,7 @@ from scrape import scrape
 from ai import ai
 from report import reset_reports, reset_numC, reset_numG, fix, get_player
 
-#Database that stores the players
+#Database representing an NFL player.
 class player_database(db.Model):
     _id = db.Column('id', db.Integer, primary_key=True)
     name = db.Column(db.String(100))
@@ -30,7 +30,7 @@ class player_database(db.Model):
         self.numC = numC
         self.numR = numR
 
-#Database that stores the admin information
+#Database that represents an admin user
 class admin_user(db.Model, UserMixin):
     id = db.Column('id', db.Integer, primary_key=True)
     username = db.Column(db.String(20))
@@ -42,7 +42,7 @@ class admin_user(db.Model, UserMixin):
         self.password = password
         self.question = question
 
-#View that displays all players
+#This view displays all players
 class MyModelView(ModelView):
     def is_accessible(self):
         if 'admin' in session:
@@ -51,14 +51,15 @@ class MyModelView(ModelView):
     
     def inaccessible_callback(self, name, **kwargs):
         return redirect(url_for('login'))
-#View that displays admin information  
+    
+#This view displays admin info
 class MyAdminIndexView(AdminIndexView):
     def is_accessible(self):
         if 'admin' in session:
             return True
         return False
 
-#View used for scraping new players
+#This view is used for scraping new players to the database
 class ScrapeView(BaseView):
     @expose('/', methods=('GET', 'POST'))
     def index(self):
@@ -70,7 +71,7 @@ class ScrapeView(BaseView):
             return True
         return False
 
-#View used for generating new descriptions
+#This view is used for generating descriptions for players
 class AiView(BaseView):
     @expose('/', methods=('GET', 'POST'))
     def index(self):
@@ -82,7 +83,7 @@ class AiView(BaseView):
             return True
         return False
     
-#View used for fixing reported players
+#This view is used for fixing a reported players image
 class ReportView(BaseView):
     @expose('/', methods=('GET', 'POST'))
     def index(self):            

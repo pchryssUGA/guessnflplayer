@@ -1,27 +1,27 @@
 {% extends 'admin/master.html' %}
 {% block title%}Players{% endblock%}
 {% block head_css %}
-    {{ super() }}
-    <link rel='stylesheet' href='{{url_for('static', filename='styles/report.css')}}'>
+  	{{ super() }}
+  	<link rel='stylesheet' href='{{url_for('static', filename='styles/report.css')}}'>
 {% endblock%}
 {% block body%}
-	{% for i in range(100)%}
-	<form action='#' method='POST'>
-	  <input type='hidden' name='submit' value='Fix Image'>
-          <p><input type='hidden' name='id' value='{{values[i]._id}}'/></p>
-          <p>ID: {{values[i]._id}}, Name: {{values[i].name}}, Reports: {{values[i].numR}}     <input type='submit' value='Fix Image'/></p>
-	</form>
-    {% endfor %}
-    <form action='#' method='POST'>
-        <input type='hidden' name='submit' value='Clear Reports'>
-        <p><input type='submit' value='Clear Reports'/></p>
-    </form>
-    <form action='#' method='POST'>
-      <input type='hidden' name='submit' value='Clear numC'>
-      <p><input type='submit' value='Clear numC'/></p>
-    </form>
-    <form action='#' method='POST'>
-      <input type='hidden' name='submit' value='Clear numG'>
-      <p><input type='submit' value='Clear numG'/></p>
-    </form>
+  	{% for i in range(100)%}
+	  	<form action='#' method='POST'>
+	    	<input type='hidden' name='submit' value='Fix Image'>
+      		<p><input type='hidden' name='id' value='{{values[i]._id}}'/></p>
+      		<p>ID: {{values[i]._id}}, Name: {{values[i].name}}, Reports: {{values[i].numR}}     <input type='submit' value='Fix Image'/></p>
+	  	</form>
+  	{% endfor %}
+    	<form action='#' method='POST'>
+        	<input type='hidden' name='submit' value='Clear Reports'>
+        	<p><input type='submit' value='Clear Reports'/></p>
+    	</form>
+    	<form action='#' method='POST'>
+      		<input type='hidden' name='submit' value='Clear numC'>
+      		<p><input type='submit' value='Clear numC'/></p>
+    	</form>
+    	<form action='#' method='POST'>
+      		<input type='hidden' name='submit' value='Clear numG'>
+      		<p><input type='submit' value='Clear numG'/></p>
+    	</form>
 {% endblock %}

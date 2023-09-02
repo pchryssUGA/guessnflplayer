@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 {% block title%}Players{% endblock%}
-{% block content%}
-<form action='bug' method='post'
-      <input type='hidden' name='submit' value='support@guessnflplayer.com'>
-<p>Subject</p>
-<textarea class='report_subject' type='text' autocomplete='off' name='subject' placeholder='Bug Subject'></textarea>
-<p>Bug Description</p>
-<textarea class='report_message' type='text' autocomplete='off' name='message' placeholder='Bug Description'></textarea>
-<p><input type='submit' value='Submit Report'/>
-        </form>
+{% block content %}
+    <form action='bug' method='post'>
+        <input type='hidden' name='submit' value='support@guessnflplayer.com'>
+        <p>Subject</p>
+        <textarea class='report_subject' type='text' autocomplete='off' name='subject' placeholder='Bug Subject'></textarea>
+        <p>Bug Description</p>
+        <textarea class='report_message' type='text' autocomplete='off' name='message' placeholder='Bug Description'></textarea>
+        <p><input type='submit' value='Submit Report'/>
+    </form>
 {% endblock %}

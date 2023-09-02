@@ -17,10 +17,11 @@ KEY = os.getenv('GOOGLE_API_KEY')
 CX = os.getenv('GOOGLE_API_CX')
 WEBSITE = os.getenv('WEBSITE')
 
+#Creates a wb/sheet for the 2022 NFL starters
 wb = load_workbook(filename='/home/pchryss/2022_nfl_starters.xlsx')
 roster_sheet = wb['Regular Season 22']
 
-nameSet = set()
+#Maps a players team variable to the full name of the team
 scrape_teams = {'crd': 'Arizona Cardinals',
                 'atl': 'Atlanta Falcons',
                 'rav': 'Baltimore Ravens',
@@ -54,6 +55,7 @@ scrape_teams = {'crd': 'Arizona Cardinals',
                 'oti': 'Tennessee Titans',            
                 'was': 'Washington Commanders'}
 
+#Maps a players team variable to the cooresponding column in the Excel Sheet (2022 players only)
 sheet_teams = {'crd': 'B',
                'atl': 'C',
                'rav': 'D',
@@ -85,7 +87,9 @@ sheet_teams = {'crd': 'B',
                'sea': 'AD',
                'tam': 'AE',
                'oti': 'AF',
-               'was': 'AG'}               
+               'was': 'AG'}  
+
+nameSet = set()          
 
 #Represents a player object
 class Player:
@@ -94,6 +98,7 @@ class Player:
         self.year = year
         self.url = url
 
+#Function that calls the scraping function
 def scrape(database):
     if request.method == 'POST':
         team = request.form['tm']
@@ -101,12 +106,12 @@ def scrape(database):
         endDate = request.form['ed']
         run(database, team, startDate, endDate)
         
-#Function that runs the scraper
+#Function that scrapes player information from the internet
 def run(database, tm, startDate, endDate):
     team = scrape_teams.get(tm)
     playerArray = []
     
-    #Iterates through the scrape for every year requested. Uses the pandas library to locate a table populated with player names
+    #Iterates through the scraper for every year requested. Uses the pandas library to locate a table populated with player names
     for i in range(int(endDate), int(startDate), -1):
         year = str(i)
         if year == '2022':
@@ -120,10 +125,9 @@ def run(database, tm, startDate, endDate):
             df = pd.read_html(currentData.content)
             table = df[0]
             player_names = table['Player']
-        #Iterates through every player name found in the table
-        #First calls the Google Images API to generate an image url for the player
-        #Then checks for duplicates (the website used uses * and + to denote pro bowl / all pro honors. In order to avoid 'Tom Brady' and 'Tom Brady+' from both being added,
-        #the names are trimmed and then checked)
+        #Iterates through every player found in the player table
+        # In certain websites, the character '*' or '+' is added to denote Pro Bowl/All Pro honors. These characters must be trimmed off a string before 
+        # looking for images and adding to the database.
         for player in player_names:
             if (player == 'Offensive Starters' or player == 'Defensive Starters'):
                 continue
@@ -142,7 +146,8 @@ def run(database, tm, startDate, endDate):
             imageLink = imageItems['link']
             nameSet.add(player)
             playerArray.append(Player(player, year, imageLink))
-    #Sorts the array by year and then iterates through each name, adding them to the database
+    #Sorts the array by year and then iterates through each name, creating a Player object and adding them to the database
+    # . This function downloads the images locally to the static/images folder to ensure faster load times for users
     playerArray = sorted(playerArray, key=lambda x: x.year)
     for player in playerArray:
         name = player.name.replace(' ', '_')

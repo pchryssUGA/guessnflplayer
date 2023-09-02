@@ -2,53 +2,53 @@
 {% block title %}Generate Random Player{% endblock %}
 {% block style %}{{url_for('static', filename='styles/gen.css')}}{% endblock%}
 {% block content%}
-{% if value != 'blank' %}
-<style>
-#image {
-    border: 5px solid {{values[3]}};
-}
-.title, .generate_div, .guess_div, .report_div {
-    color: {{values[3]}};
-}
-.navbar {
-    background-color: {{values[3]}}!important;
-}
-.button {
-    border: 1.5px solid {{values[3]}};
-}
-</style>
-<div class='title'>
-  <h1>Guess the player!</h1>
-</div>
-<div class='img_div'>
-  <img id='image' src='{{values[0].url}}'>
-</div>
-<div class='guess_div'>
-  <form action = 'result/{{values[0]._id}}' method='post'>
-    <input type='hidden' name='pick_team' value='{{values[0].team}}'>
-    <input type='hidden' name='from_range' value='{{values[1]}}'>
-    <input type='hidden' name='to_range' value='{{values[2]}}'>
-    <p>Guess Player <input type='text' name='guess' placeholder='Enter Guess' autocomplete='off'/><input class="button" id='submit_button' type='submit' value='submit' /></p>
-  </form>
-</div>
-<div class='generate_div'>
-  <form action='#' method='POST'>
-    <input type='hidden' name='pick_team' value='{{values[0].team}}'>
-    <input type='hidden' name='from_range' value='{{values[1]}}'>
-    <input type='hidden' name='to_range' value='{{values[2]}}'>
-    <p>Don't know? <input class="button" type='submit' name='submit' value='Generate a New Player'></p>
-  </form>
-</div>
-<div class='report_div'>
-  <form action='#' method='POST'>
-    <input type='hidden' name='pick_id' value='{{values[0]._id}}'>
-    <input type='hidden' name='pick_team' value='{{values[0].team}}'>
+  	{% if value != 'blank' %}
+    	<style>
+      		#image {
+          		border: 5px solid {{values[3]}};
+      		}
+      		.title, .generate_div, .guess_div, .report_div {
+          		color: {{values[3]}};
+      		}
+      		.navbar {
+          		background-color: {{values[3]}}!important;
+      		}
+      		.button {
+          		border: 1.5px solid {{values[3]}};
+      		}
+    	</style>
+    	<div class='title'>
+      		<h1>Guess the player!</h1>
+    	</div>
+    	<div class='img_div'>
+      		<img id='image' src='{{values[0].url}}'>
+    	</div>
+    	<div class='guess_div'>
+      		<form action = 'result/{{values[0]._id}}' method='post'>
+        		<input type='hidden' name='pick_team' value='{{values[0].team}}'>
+        		<input type='hidden' name='from_range' value='{{values[1]}}'>
+        		<input type='hidden' name='to_range' value='{{values[2]}}'>
+        		<p>Guess Player <input type='text' name='guess' placeholder='Enter Guess' autocomplete='off'/><input class="button" id='submit_button' type='submit' value='submit' /></p>
+      		</form>
+    	</div>
+    	<div class='generate_div'>
+      		<form action='#' method='POST'>
+        		<input type='hidden' name='pick_team' value='{{values[0].team}}'>
+        		<input type='hidden' name='from_range' value='{{values[1]}}'>
+        		<input type='hidden' name='to_range' value='{{values[2]}}'>
+        		<p>Don't know? <input class="button" type='submit' name='submit' value='Generate a New Player'></p>
+      		</form>
+    	</div>
+    	<div class='report_div'>
+      		<form action='#' method='POST'>
+        		<input type='hidden' name='pick_id' value='{{values[0]._id}}'>
+        		<input type='hidden' name='pick_team' value='{{values[0].team}}'>
                 <input type='hidden' name='from_range' value='{{values[1]}}'>
                 <input type='hidden' name='to_range' value='{{values[2]}}'>
-    <p>Bad Image? <input class="button" type='submit' name='submit' value='Report a Bad Image'></p>
-  </form>
-</div>
-{% else %}
-<p>No players found</p>
-{% endif %}
+        		<p>Bad Image? <input class="button" type='submit' name='submit' value='Report a Bad Image'></p>
+      		</form>
+    	</div>
+  	{% else %}
+    	<p>No players found</p>
+ 	{% endif %}
 {% endblock %}

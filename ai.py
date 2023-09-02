@@ -56,4 +56,4 @@ def ai(database):
 #                content = output.choices[0].message.content
 #                player.desc = content
 #        db.session.commit()
-    print(hello)
+    print("hello")
