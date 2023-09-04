@@ -92,6 +92,27 @@ body {
 
 @media only screen and (min-width: 980px) and (max-width: 981px){
 
+    .button {
+	background-color: #EAEAEA;
+	color: black;
+    }
+
+    .bug_div p {
+	font-size: 30px;
+    }
+
+    .report_subject {
+	height: 100px;
+	width: 500px;
+	font-size: 20px;
+    }
+
+    .report_message {
+	height: 100px;
+	width: 500px;
+	font-size: 20px;
+    }
+
     .logo_div {
 	width: 540px;
     }

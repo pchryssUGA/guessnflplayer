@@ -51,35 +51,35 @@ team_colors = {'crd': '#97233F',
 #Generate a new player
 @gen_blueprint.route('/', methods=['POST', 'GET'])
 def gen():
-    #Gen should generally only be generated using a post request, meaning a user has chosen a team
-    if request.method == 'POST':
-        fromVal = request.form['from_range']
-        toVal = request.form['to_range']
-        pickTeam = request.form['pick_team']
-        #Reporting a player will increment their numR variable (numReport)
-        if (request.form['submit'] == 'Report a Bad Image'):
-            playerID = int(request.form['pick_id'])
-            reportPlayer = player_database.query.filter_by(_id=playerID).first()
-            reportPlayer.numR = reportPlayer.numR + 1
-            db.session.commit()
-        length = player_database.query.filter_by(team=pickTeam).filter(player_database.year >= fromVal).filter(player_database.year <= toVal).order_by(player_database._id.desc()).first()
-        #If length is none, there are no players for the selected year range/team combination. This also helps exclude edge cases such as fromYear being greater than toYear
-        if length is not None:
-            #First gives the FIRST id of a chosen teams set of players. This is important as it gives the program a safe range of ids to choose from, 
-#           # as players from a specific team from a specific year are given ids at the same time (e.g., if 1-20 are NYJ, 2022, you only want to generate players 1-20)
-            first = player_database.query.filter_by(team=pickTeam).filter(player_database.year >= fromVal).filter(player_database.year <= toVal).first()
-            num = str(random.randint(first._id, length._id))
-            currPlayer = player_database.query.filter_by(team=pickTeam).filter(player_database.year >= fromVal).filter(player_database.year <= toVal).filter_by(_id=num).first()
-            currPlayer.numG = currPlayer.numG + 1
-            db.session.commit()
-            team = currPlayer.team
-            color = team_colors.get(team)
-            return render_template('gen.html', values=[currPlayer, fromVal, toVal, color]) 
-        else:
-            return render_template('gen.html', value='blank')     
-    else:
-        return render_template('gen.html', value='blank')
-    
+   #Gen should generally only be generated using a post request, meaning a user has chosen a team
+   if request.method == 'POST':
+      fromVal = request.form['from_range']
+      toVal = request.form['to_range']
+      pickTeam = request.form['pick_team']
+      #Reporting a player will increment their numR variable (numReport)
+      if (request.form['submit'] == 'Report a Bad Image'):
+         playerID = int(request.form['pick_id'])
+         reportPlayer = player_database.query.filter_by(_id=playerID).first()
+         reportPlayer.numR = reportPlayer.numR + 1
+         db.session.commit()
+      length = player_database.query.filter_by(team=pickTeam).filter(player_database.year >= fromVal).filter(player_database.year <= toVal).order_by(player_database._id.desc()).first()
+      #If length is none, there are no players for the selected year range/team combination. This also helps exclude edge cases such as fromYear being greater than toYear
+      if length is not None:
+         #First gives the FIRST id of a chosen teams set of players. This is important as it gives the program a safe range of ids to choose from, 
+         #           # as players from a specific team from a specific year are given ids at the same time (e.g., if 1-20 are NYJ, 2022, you only want to generate players 1-20)
+         first = player_database.query.filter_by(team=pickTeam).filter(player_database.year >= fromVal).filter(player_database.year <= toVal).first()
+         num = str(random.randint(first._id, length._id))
+         currPlayer = player_database.query.filter_by(team=pickTeam).filter(player_database.year >= fromVal).filter(player_database.year <= toVal).filter_by(_id=num).first()            
+         currPlayer.numG = currPlayer.numG + 1
+         db.session.commit()
+         team = currPlayer.team
+         color = team_colors.get(team)
+         return render_template('gen.html', values=[currPlayer, fromVal, toVal, color]) 
+      else:
+         return render_template('gen.html', value='blank')     
+   else:
+      return render_template('gen.html', value='blank')
+   
 #Displays the result of the user's guess
 @gen_blueprint.route('/result/<id>', methods=['POST', 'GET'])
 def result(id):

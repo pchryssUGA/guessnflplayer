@@ -2,11 +2,13 @@
 {% block title%}Players{% endblock%}
 {% block content %}
     <form action='bug' method='post'>
+      <div class="bug_div">
         <input type='hidden' name='submit' value='support@guessnflplayer.com'>
         <p>Subject</p>
         <textarea class='report_subject' type='text' autocomplete='off' name='subject' placeholder='Bug Subject'></textarea>
         <p>Bug Description</p>
         <textarea class='report_message' type='text' autocomplete='off' name='message' placeholder='Bug Description'></textarea>
-        <p><input type='submit' value='Submit Report'/>
+        <p><input class='button'  type='submit' value='Submit Report'/>
+      </div>
     </form>
 {% endblock %}

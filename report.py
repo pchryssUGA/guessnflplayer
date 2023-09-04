@@ -34,6 +34,9 @@ def get_player(database, need_better):
     images = []
     player = database.query.filter_by(_id=id).first()
     year = str(player.year)
+    print(player.name)
+    print(player.team)
+    print(year)
     query = 'NFL ' + player.name + ' playing for ' + player.team + ' in game ' + year
     #need_better is True when the first four images are not good. This makes the query broader and helps find images for players that are not as popular
     if need_better is True:
