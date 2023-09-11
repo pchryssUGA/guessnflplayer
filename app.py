@@ -40,8 +40,10 @@ admin = Admin(app, index_view=MyAdminIndexView())
 admin.add_view(MyModelView(admin_user, db.session))
 admin.add_view(MyModelView(player_database, db.session))
 admin.add_view(ScrapeView(name='Scrape', endpoint='scrape'))
-#admin.add_view(AiView(name='AI', endpoint='ai'))
+admin.add_view(AiView(name='AI', endpoint='ai'))
 admin.add_view(ReportView(name='Report', endpoint='report'))
+
+
 
 #Home page
 @app.route('/', methods=['POST', 'GET'] )
@@ -74,14 +76,8 @@ def bug():
     if request.method == 'POST':
         subject = request.form['subject']
         message = request.form['message']
-        call_lambda(subject, message)
+        response = requests.get(AWS_API_WEBSITE + 'subject=' + subject + '&message=' + message)
     return render_template('bug.html')
-
-#Function used when a user reports a bug
-#Triggers an AWS Lambda containing an AWS SES call
-def call_lambda(subject, message):
-    api = AWS_API_WEBSITE
-    response = requests.get(api + 'subject=' + subject + '&message=' + message)
 
 if __name__ == '__main__':
     with app.app_context():
